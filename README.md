@@ -1,13 +1,19 @@
-# Build and Run
+# Donkey Kong Game
 
-Compile:
+## 🚀 How to Build and Run
 
-```bash
-make
-```
+### Using VS Code (Recommended)
 
-Run:
+* **Compile and Run:** Press `Ctrl + F5`
+* **Debug:** Press `F5`
 
-```bash
-make run
-```
+### Using the Terminal
+
+* **Compile only:**
+    ```bash
+    make
+    ```
+* **Run the executable:**
+    ```bash
+    make run
+    ```

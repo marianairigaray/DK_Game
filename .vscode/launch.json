@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "C:/Users/Mari/Documents/Faculdade/Alg_e_prog/Jogo/DK_Game",
-      "program": "C:/Users/Mari/Documents/Faculdade/Alg_e_prog/Jogo/DK_Game/main.exe",
+      "externalConsole": false,
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/main.exe",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
@@ -19,7 +19,7 @@
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "Compile", // Roda o Makefile antes de iniciar
+      "preLaunchTask": "Build", // Roda o Makefile antes de iniciar
     }
   ]
 }
