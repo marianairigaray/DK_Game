@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Mari/Documents/Faculdade/Alg_e_prog/Jogo/DK_Game",
-      "program": "c:/Users/Mari/Documents/Faculdade/Alg_e_prog/Jogo/DK_Game/build/Debug/outDebug",
+      "cwd": "C:/Users/Mari/Documents/Faculdade/Alg_e_prog/Jogo/DK_Game",
+      "program": "C:/Users/Mari/Documents/Faculdade/Alg_e_prog/Jogo/DK_Game/main.exe",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
@@ -18,7 +18,8 @@
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "preLaunchTask": "Compile", // Roda o Makefile antes de iniciar
     }
   ]
 }

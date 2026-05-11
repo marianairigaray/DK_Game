@@ -1,2 +1,5 @@
+#define MAP_ROWS 30
+#define MAP_COLS 30
+
 // Prototypes
-void read_map(int num_map);
+void read_map(char map[MAP_ROWS][MAP_COLS], int num_map);

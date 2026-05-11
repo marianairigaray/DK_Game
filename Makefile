@@ -17,7 +17,7 @@ LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
 TARGET = main.exe
 
 all: # main.exe depends on main.o
-	$(CC) src/main.c src/map/map.c -o $(TARGET) $(CFLAGS) $(LDFLAGS) $(LDLIBS)
+	$(CC) src/main.c src/map/map.c -o $(TARGET) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -g
 
 run:
 	./$(TARGET)
