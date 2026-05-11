@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "map.h"
+#include "raylib.h"
 
 /* Opens and reads a map from a file from the assets/maps directory */
 void read_map(char map[MAP_ROWS][MAP_COLS], int num_map)
@@ -37,4 +38,25 @@ void read_map(char map[MAP_ROWS][MAP_COLS], int num_map)
 
     fclose(file);
 
+}
+void draw_map(char map[MAP_ROWS][MAP_COLS])//Desenha o mapa na tela usando a função DrawRectangle da Raylib
+{
+    for(int i = 0; i < MAP_ROWS; i++)
+    {
+        for(int j = 0; j < MAP_COLS; j++)
+        {
+            char c = map[i][j];// Obtém o caractere da posição atual do mapa
+            if(c == 'Z')// Se o caractere for 'Z', desenha um retângulo preto representando uma parede
+            {
+                DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, BLACK);
+            }
+            else if(c == 'P')// Se o caractere for 'P', desenha um retângulo vermelho representando o jogador
+            {
+                DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, RED);
+            }else if(c == 'D')// Se o caractere for 'D', desenha um retângulo laranja representando o Donkey Kong
+            {
+                DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, ORANGE);
+            }
+        }
+    }
 }

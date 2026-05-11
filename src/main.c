@@ -1,19 +1,23 @@
-#include "map.h"
+#include "raylib.h"
 #include <stdio.h>
+#include "map.h"
 
-int main()
+int main(void)
 {
-	char map[MAP_ROWS][MAP_COLS];
-	read_map(map, 1);
-
-	for(int i = 0; i < 30; i++)
+    char map[MAP_ROWS][MAP_COLS] = {0};
+    InitWindow(640, 480, "DK Game");
+    SetTargetFPS(60);
+    read_map(map,0);
+    while (!WindowShouldClose())
     {
-        for(int j = 0; j < 30; j++)
-        {
-            printf("%c", map[i][j]);
-        }
-        printf("\n");
+        BeginDrawing();
+
+
+        ClearBackground(WHITE);
+        draw_map(map);
+        EndDrawing();
     }
 
-	return 0;
+    CloseWindow();
+    return 0;
 }
