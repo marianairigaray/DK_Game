@@ -5,7 +5,7 @@
 int main(void)
 {
     char map[MAP_ROWS][MAP_COLS] = {0};
-    InitWindow(640, 480, "DK Game");
+    InitWindow(960, 960, "DK Game");
     SetTargetFPS(60);
     read_map(map,0);
     while (!WindowShouldClose())

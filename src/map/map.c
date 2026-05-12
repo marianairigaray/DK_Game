@@ -39,6 +39,7 @@ void read_map(char map[MAP_ROWS][MAP_COLS], int num_map)
     fclose(file);
 
 }
+
 void draw_map(char map[MAP_ROWS][MAP_COLS])//Desenha o mapa na tela usando a função DrawRectangle da Raylib
 {
     for(int i = 0; i < MAP_ROWS; i++)
@@ -53,10 +54,20 @@ void draw_map(char map[MAP_ROWS][MAP_COLS])//Desenha o mapa na tela usando a fun
             else if(c == 'P')// Se o caractere for 'P', desenha um retângulo vermelho representando o jogador
             {
                 DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, RED);
-            }else if(c == 'D')// Se o caractere for 'D', desenha um retângulo laranja representando o Donkey Kong
+            }
+            else if(c == 'E')// Se o caractere for 'E', desenha um retângulo laranja representando o Donkey Kong
             {
                 DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, ORANGE);
             }
+            else if(c == 'S' || c == 'H') // Se o caractere for 'S' ou 'H', desenha um retângulo cinza representando uma escada
+            {
+                DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, GRAY);
+            }
+            else if(c == 'F') // Se o caractere for 'F', desenha um retângulo azul representando a "porta" (final da fase)
+            {
+                DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, BLUE);
+            }
+            // Eu só não adicionei o caso para o caractere 'D' (descida de escada) - não achei necessário.
         }
     }
 }

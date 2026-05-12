@@ -2,7 +2,7 @@
 
 ## 🚀 How to Build and Run
 
-### Using VS Code (Recommended)
+### Using VS Code
 
 * **Compile and Run:** Press `Ctrl + F5`
 * **Debug:** Press `F5`
