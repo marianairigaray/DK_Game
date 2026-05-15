@@ -1,20 +1,31 @@
 #include "raylib.h"
-#include <stdio.h>
 #include "map.h"
+#include "player.h"
+#include <stdio.h>
 
 int main(void)
 {
     char map[MAP_ROWS][MAP_COLS] = {0};
-    InitWindow(960, 960, "DK Game");
+
+    InitWindow(MAP_COLS * TILE_SIZE, MAP_ROWS * TILE_SIZE, "DK Game");
     SetTargetFPS(60);
-    read_map(map,0);
+
+    read_map(map, 0);
+
+    Player player = create_player(map);
+
+    printf("Player row = %d, col = %d\n", player.row, player.col);
+
     while (!WindowShouldClose())
     {
+        update_player(&player, map);
+
         BeginDrawing();
+        ClearBackground(RAYWHITE);
 
-
-        ClearBackground(WHITE);
         draw_map(map);
+        draw_player(player);
+
         EndDrawing();
     }
 
