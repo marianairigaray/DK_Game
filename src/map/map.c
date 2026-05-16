@@ -55,7 +55,7 @@ void draw_map(char map[MAP_ROWS][MAP_COLS])//Desenha o mapa na tela usando a fun
             {
                 DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, RED);
             }
-            else if(c == 'E')// Se o caractere for 'E', desenha um retângulo laranja representando o Donkey Kong
+            else if(c == 'E')// Se o caractere for 'E', desenha um retângulo laranja representando os inimigos
             {
                 DrawRectangle(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, ORANGE);
             }

@@ -5,7 +5,7 @@ Z
                               
 Z                             
                               
-Z                             
+ZEEEEEEE                      
                               
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
                               
@@ -26,5 +26,5 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
                               
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
                               
-      P       S               
+      P       S              E
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ

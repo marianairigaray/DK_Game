@@ -8,19 +8,19 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZHZZ
 ZZZZZZZZZZZZZZHZZZZZZZZZZZZZZZ
               H               
               H               
- D            S             D 
+ DE           S             D 
 ZHZZZZZZZZZZZZZZZZZZZZZZZZZZHZ
  H                          H 
  H                          H 
- S                   D      S 
+ SE                  D      S 
 ZZZZZZZZZZZZZZZZZZZZZHZZZZZZZZ
                      H        
                      H        
-     D               S        
+  E  D               S        
 ZZZZZHZZZZZZZZZZZZZZZZZZZZZZZZ
      H                        
      H                        
-     S                 D      
+  E  S                 D      
 ZZZZZZZZZZZZZZZZZZZZZZZHZZZZZZ
                        H      
                        H      
