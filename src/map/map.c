@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "map.h"
+#include <stdio.h>
 #include "raylib.h"
 
 /* Opens and reads a map from a file from the assets/maps directory */

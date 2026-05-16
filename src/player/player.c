@@ -1,7 +1,8 @@
-#include "raylib.h"
 #include "player.h"
-#include "map.h"
 #include <stdio.h>
+#include "collision.h"
+#include "map.h"
+#include "raylib.h"
 
 Player create_player(char map[MAP_ROWS][MAP_COLS])
 {
@@ -20,17 +21,6 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
         }
     }
     return player;
-}
-static int is_valid_move(char map[MAP_ROWS][MAP_COLS], int row, int col)
-{
-    if(row < 0 || row >= MAP_ROWS || col < 0 || col >= MAP_COLS){
-        return 0;
-    }
-    if(map[row][col] == 'Z'){
-
-        return 0;
-    }
-    return 1;
 }
 void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
 {
