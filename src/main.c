@@ -25,11 +25,13 @@ int main(void)
     for (int i = 0; i < enemy_count; i++)
     {
         printf("Enemy %d row = %d, col = %d\n", i+1, enemies[i].row, enemies[i].col);
+        printf("Direction = %d\n", enemies[i].direction);
     }
 
     while (!WindowShouldClose())
     {
         update_player(&player, map);
+        move_enemies(enemies, enemy_count);
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
