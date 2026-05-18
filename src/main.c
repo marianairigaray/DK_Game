@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "raylib.h"
 #include "enemy.h"
 #include "map.h"
@@ -6,6 +8,9 @@
 
 int main(void)
 {
+    // Inicializa a semente para geração de números aleatórios
+    srand(time(NULL));
+
     char map[MAP_ROWS][MAP_COLS] = {0};
 
     InitWindow(MAP_COLS * TILE_SIZE, MAP_ROWS * TILE_SIZE, "DK Game");

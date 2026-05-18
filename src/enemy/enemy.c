@@ -8,15 +8,11 @@
 #include "map.h"
 
 // Problemas para resolver:
-// 1º - Uso de enum é necessário?
 // 2º - A verificação não usa a função collision (voltamos ela para personagem ou modificamos para ela ser mais genérica?)
 // 3º - Velocidade dos inimigos (eles estão muito rápidos)
 
 void create_enemies(Enemy enemies[MAX_ENEMIES], char map[MAP_ROWS][MAP_COLS], int *enemy_count)
 {
-    // Inicializa a semente para geração de números aleatórios
-    srand(time(NULL));
-
     for (int row = 0; row < MAP_ROWS; row++)
     {
         for (int col = 0; col < MAP_COLS; col++)
@@ -38,11 +34,10 @@ void create_enemies(Enemy enemies[MAX_ENEMIES], char map[MAP_ROWS][MAP_COLS], in
                 map[row][col] = ' ';
 
                 // Inicializa a direção de movimento do inimigo aleatóriamente
-                enemies[*enemy_count].direction = 0 + (rand() % (1 - 0 + 1));
-                
-                // Caso a direção seja 0, ela é substituida por -1 (movimentação para esquerda)
-                if (enemies[*enemy_count].direction == 0)
-                    enemies[*enemy_count].direction = -1;
+                if (rand() % 2)
+                    enemies[*enemy_count].direction = RIGHT;
+                else
+                    enemies[*enemy_count].direction = LEFT;
 
                 (*enemy_count)++;
             }
