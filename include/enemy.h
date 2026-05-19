@@ -24,6 +24,6 @@ typedef struct
 
 void create_enemies(Enemy enemy[MAX_ENEMIES], char map[MAP_ROWS][MAP_COLS], int *enemy_count);
 void draw_enemies(Enemy enemies[MAX_ENEMIES], int enemy_count);
-void move_enemies(Enemy enemies[MAX_ENEMIES], int enemy_count);
+void move_enemies(char map[MAP_ROWS][MAP_COLS], Enemy enemies[MAX_ENEMIES], int enemy_count);
 
 #endif

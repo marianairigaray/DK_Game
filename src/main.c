@@ -36,7 +36,7 @@ int main(void)
     while (!WindowShouldClose())
     {
         update_player(&player, map);
-        move_enemies(enemies, enemy_count);
+        move_enemies(map, enemies, enemy_count);
 
         BeginDrawing();
         ClearBackground(RAYWHITE);

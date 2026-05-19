@@ -9,6 +9,11 @@
 
 // Problemas para resolver:
 // 2º - A verificação não usa a função collision (voltamos ela para personagem ou modificamos para ela ser mais genérica?)
+/*
+    - o que precisa ser testado: 
+        1: se o inimigo não passa da tela horizontalmente
+        2: se o inimigo está em cima de uma plataforma
+*/
 // 3º - Velocidade dos inimigos (eles estão muito rápidos)
 
 void create_enemies(Enemy enemies[MAX_ENEMIES], char map[MAP_ROWS][MAP_COLS], int *enemy_count)
@@ -20,7 +25,7 @@ void create_enemies(Enemy enemies[MAX_ENEMIES], char map[MAP_ROWS][MAP_COLS], in
             if (map[row][col] == 'E')
             {
                 // Caso existam mais inimigos que o máximo, a função retorna com mensagem de erro
-                if(*enemy_count >= MAX_ENEMIES)
+                if (*enemy_count >= MAX_ENEMIES)
                 {
                     printf("Error: maximum number of enemies exceeded.\n");
                     return;
@@ -51,14 +56,15 @@ void draw_enemies(Enemy enemies[MAX_ENEMIES], int enemy_count)
         DrawRectangle(enemies[i].col * TILE_SIZE, enemies[i].row * TILE_SIZE, TILE_SIZE, TILE_SIZE, ORANGE);
 }
 
-void move_enemies(Enemy enemies[MAX_ENEMIES], int enemy_count)
+void move_enemies(char map[MAP_ROWS][MAP_COLS], Enemy enemies[MAX_ENEMIES], int enemy_count)
 {
     for (int i = 0; i < enemy_count; i++)
     {
 
         int new_col = enemies[i].col + enemies[i].direction;
 
-        if ((new_col < MAP_COLS) && (new_col >= 0))
+        // Caso o movimento seja valido (is_valid_move futuramente)
+        if (((new_col < MAP_COLS) && (new_col >= 0)) && (map[enemies[i].row + 1][new_col] != ' '))
         {
             enemies[i].col = new_col;
         }
