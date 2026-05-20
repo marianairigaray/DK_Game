@@ -5,6 +5,11 @@
 
 typedef struct
 {
+    float x;
+    float y;
+    float width;
+    float height;
+    float speed;
     int row;
     int col;
 } Player;
