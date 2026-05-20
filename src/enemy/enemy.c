@@ -1,5 +1,6 @@
 #include "enemy.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -8,12 +9,6 @@
 #include "map.h"
 
 // Problemas para resolver:
-// 2º - A verificação não usa a função collision (voltamos ela para personagem ou modificamos para ela ser mais genérica?)
-/*
-    - o que precisa ser testado: 
-        1: se o inimigo não passa da tela horizontalmente
-        2: se o inimigo está em cima de uma plataforma
-*/
 // 3º - Velocidade dos inimigos (eles estão muito rápidos)
 
 void create_enemies(Enemy enemies[MAX_ENEMIES], char map[MAP_ROWS][MAP_COLS], int *enemy_count)
@@ -56,6 +51,24 @@ void draw_enemies(Enemy enemies[MAX_ENEMIES], int enemy_count)
         DrawRectangle(enemies[i].col * TILE_SIZE, enemies[i].row * TILE_SIZE, TILE_SIZE, TILE_SIZE, ORANGE);
 }
 
+// Verifica se o próximo movimento do inimigo é válido
+static bool is_valid_move(char map[MAP_ROWS][MAP_COLS], int row, int col)
+{
+    // Caso ultrapasse a borda horizontal esquerda
+    if (col >= MAP_COLS)
+        return false;
+
+    // Caso ultrapasse a borda horizontal direita
+    if (col < 0)
+        return false;
+
+    // Caso não exista chão embaixo
+    if (map[row + 1][col] == ' ')
+        return false;
+
+    return true;
+}
+
 void move_enemies(char map[MAP_ROWS][MAP_COLS], Enemy enemies[MAX_ENEMIES], int enemy_count)
 {
     for (int i = 0; i < enemy_count; i++)
@@ -63,8 +76,7 @@ void move_enemies(char map[MAP_ROWS][MAP_COLS], Enemy enemies[MAX_ENEMIES], int 
 
         int new_col = enemies[i].col + enemies[i].direction;
 
-        // Caso o movimento seja valido (is_valid_move futuramente)
-        if (((new_col < MAP_COLS) && (new_col >= 0)) && (map[enemies[i].row + 1][new_col] != ' '))
+        if (is_valid_move(map, enemies[i].row, new_col))
         {
             enemies[i].col = new_col;
         }
@@ -73,6 +85,5 @@ void move_enemies(char map[MAP_ROWS][MAP_COLS], Enemy enemies[MAX_ENEMIES], int 
             enemies[i].direction *= -1; // Toggle na direção
             enemies[i].col = enemies[i].col + enemies[i].direction;
         }
-            
     }
 }
