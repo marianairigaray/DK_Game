@@ -11,10 +11,10 @@ int main(void)
     // Inicializa a semente para geração de números aleatórios
     srand(time(NULL));
 
-    char map[MAP_ROWS][MAP_COLS] = {0};
-
-    InitWindow(MAP_COLS * TILE_SIZE, MAP_ROWS * TILE_SIZE, "DK Game");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "DK Game");
     SetTargetFPS(60);
+
+    char map[MAP_ROWS][MAP_COLS] = {0};
 
     read_map(map, 0);
 
@@ -29,7 +29,7 @@ int main(void)
     printf("Player row = %d, col = %d\n", player.row, player.col);
     for (int i = 0; i < enemy_count; i++)
     {
-        printf("Enemy %d row = %d, col = %d\n", i+1, enemies[i].row, enemies[i].col);
+        printf("Enemy %d x = %f, y = %f\n", i+1, enemies[i].x, enemies[i].y);
         printf("Direction = %d\n", enemies[i].direction);
     }
 

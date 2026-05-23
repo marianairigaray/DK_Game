@@ -4,6 +4,7 @@
 #include "map.h"
 
 #define MAX_ENEMIES 10
+#define ENEMY_SPEED 150
 
 // Enemy movement direction
 typedef enum
@@ -14,10 +15,10 @@ typedef enum
 
 typedef struct
 {
-    // Enemy coordinates
-    int row;
-    int col;
-
+    // Enemy position (pixels)
+    float x;
+    float y;
+    
     // Enemy movement direction
     Direction direction;
 } Enemy;
