@@ -86,7 +86,7 @@ void move_enemies(char map[MAP_ROWS][MAP_COLS], Enemy enemies[MAX_ENEMIES], int 
         // Calcula a nova posição do inimigo somando ou subtraindo delta_x da posição atual, dependendo da direção do movimento
         float new_x = enemies[i].x + (delta_x * enemies[i].direction);
 
-        if (is_valid_move(map, new_x,  enemies[i].y))
+        if (is_valid_move(map, new_x, enemies[i].y))
         {
             enemies[i].x = new_x;
         }

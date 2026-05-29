@@ -94,15 +94,17 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
     {
         player->y += dy;
         
-        // Se ele está se movendo para baixo ou parado, precisamos checar se bateu no chão
+        // Se ele está se movendo para baixo, precisamos checar se bateu no chão
         // Fazemos isso testando se 1 pixel abaixo dele é sólido
         if (player->speed_y >= 0 && !can_move_to(map, player->x, player->y + 1, player->width, player->height))
         {
+            // player em cima da plataforma
             player->is_grounded = true;
             player->speed_y = 0;
         }
         else
         {
+            // player pode continuar caindo
             player->is_grounded = false;
         }
     }
@@ -116,9 +118,9 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
         }
         else if (player->speed_y > 0)
         {
-            // Pousou no chão
+            // Pousou no chão ou está parado
             player->is_grounded = true;
-            player->speed_y = 0;
+            player->speed_y = 0; // enquanto o player estiver no chao, sua velocidade vertical será zero
         }
     }
 }
