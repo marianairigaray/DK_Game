@@ -2,33 +2,33 @@
 #include "player.h"
 #include "map.h"
 
+#include <stdbool.h>
+
+#include "stdio.h" // para debug
+
 // Constantes de física (você pode ajustar esses valores para mudar a sensação do pulo)
 #define GRAVITY 600.0f      // Força que puxa o player para baixo
 #define JUMP_FORCE -350.0f  // Força do pulo (negativo porque na tela o 'para cima' é diminuir o Y)
 
-static int is_solid_tile(char map[MAP_ROWS][MAP_COLS], int row, int col)
+static bool is_solid_tile(char map[MAP_ROWS][MAP_COLS], float x, float y)
 {
-    if (row < 0 || row >= MAP_ROWS || col < 0 || col >= MAP_COLS)
+    int col = (int)(x / TILE_SIZE);
+    int row = (int)(y / TILE_SIZE);
+
+    if (y < 0 || y >= SCREEN_WIDTH || x < 0 || x >= SCREEN_WIDTH)
     {
-        return 1;
+        return true;
     }
     return map[row][col] == 'Z';
 }
 
-static int is_solid_at_pixel(char map[MAP_ROWS][MAP_COLS], float x, float y)
+static bool can_move_to(char map[MAP_ROWS][MAP_COLS], float x, float y, float width, float height)
 {
-    int col = (int)(x / TILE_SIZE);
-    int row = (int)(y / TILE_SIZE);
-    return is_solid_tile(map, row, col);
-}
-
-static int can_move_to(char map[MAP_ROWS][MAP_COLS], float x, float y, float width, float height)
-{
-    if (is_solid_at_pixel(map, x, y)) return 0;
-    if (is_solid_at_pixel(map, x + width - 1, y)) return 0;
-    if (is_solid_at_pixel(map, x, y + height - 1)) return 0;
-    if (is_solid_at_pixel(map, x + width - 1, y + height - 1)) return 0;
-    return 1;
+    if (is_solid_tile(map, x, y)) return false;
+    if (is_solid_tile(map, x + width - 1, y)) return false;
+    if (is_solid_tile(map, x, y + height - 1)) return false;
+    if (is_solid_tile(map, x + width - 1, y + height - 1)) return false;
+    return true;
 }
 
 Player create_player(char map[MAP_ROWS][MAP_COLS])
