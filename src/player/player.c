@@ -4,8 +4,6 @@
 
 #include <stdbool.h>
 
-#include "stdio.h" // para debug
-
 // Constantes de física (você pode ajustar esses valores para mudar a sensação do pulo)
 #define GRAVITY 600.0f      // Força que puxa o player para baixo
 #define JUMP_FORCE -350.0f  // Força do pulo (negativo porque na tela o 'para cima' é diminuir o Y)
@@ -15,7 +13,7 @@ static bool is_solid_tile(char map[MAP_ROWS][MAP_COLS], float x, float y)
     int col = (int)(x / TILE_SIZE);
     int row = (int)(y / TILE_SIZE);
 
-    if (y < 0 || y >= SCREEN_WIDTH || x < 0 || x >= SCREEN_WIDTH)
+    if (y < 0 || y >= SCREEN_HEIGHT || x < 0 || x >= SCREEN_WIDTH)
     {
         return true;
     }
@@ -31,6 +29,50 @@ static bool can_move_to(char map[MAP_ROWS][MAP_COLS], float x, float y, float wi
     return true;
 }
 
+static bool is_ladder_start(char map[MAP_ROWS][MAP_COLS], float x, float y) 
+{ 
+    int row = (int) y / TILE_SIZE; 
+    int left_border = (int) x / TILE_SIZE; 
+    int right_border = (int) (x + TILE_SIZE-1) / TILE_SIZE; 
+
+    if (map[row][left_border] == 'S') 
+    { 
+        return true; 
+    } 
+    
+    if (map[row][right_border] == 'S') 
+    { 
+        return true; 
+    } 
+    
+    return false; 
+}
+
+static bool is_ladder_down(char map[MAP_ROWS][MAP_COLS], float x, float y)
+{
+    int row = (int) y / TILE_SIZE; 
+    int left_border = (int) x / TILE_SIZE; 
+    int right_border = (int) (x + TILE_SIZE-1) / TILE_SIZE; 
+
+    if (map[row][left_border] == 'D') 
+    { 
+        return true; 
+    } 
+    
+    if (map[row][right_border] == 'D') 
+    { 
+        return true; 
+    } 
+    
+    return false; 
+}
+
+static void climb_ladder(Player *player, int dir) 
+{ 
+    player->speed_y = 0; // APAGAR
+    player->y += 4 * TILE_SIZE * dir;
+}
+
 Player create_player(char map[MAP_ROWS][MAP_COLS])
 {
     Player player;
@@ -43,6 +85,9 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
     // Inicializa as variáveis de física
     player.speed_y = 0.0f;
     player.is_grounded = false;
+    
+    // Inicializa o estado do jogador como no chão
+    player.state = GROUNDED;
 
     for (int row = 0; row < MAP_ROWS; row++)
     {
@@ -74,54 +119,94 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
         player->x += dx;
     }
 
-    // --- FÍSICA DO PULO E GRAVIDADE (EIXO Y) ---
-    
-    // Aplica a gravidade continuamente se não estiver no chão
-    player->speed_y += GRAVITY * dt;
-
-    // Se o jogador apertar ESPAÇO (ou KEY_UP) E estiver tocando o chão, ele pula
-    if ((IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP)) && player->is_grounded)
+    switch (player->state)
     {
-        player->speed_y = JUMP_FORCE;
-        player->is_grounded = false;
-    }
+        case GROUNDED:
 
-    // Calcula a distância que ele quer andar no eixo Y neste frame
-    float dy = player->speed_y * dt;
-
-    // Tenta mover no eixo Y
-    if (can_move_to(map, player->x, player->y + dy, player->width, player->height))
-    {
-        player->y += dy;
-        
-        // Se ele está se movendo para baixo, precisamos checar se bateu no chão
-        // Fazemos isso testando se 1 pixel abaixo dele é sólido
-        if (player->speed_y >= 0 && !can_move_to(map, player->x, player->y + 1, player->width, player->height))
-        {
-            // player em cima da plataforma
-            player->is_grounded = true;
             player->speed_y = 0;
-        }
-        else
-        {
-            // player pode continuar caindo
-            player->is_grounded = false;
-        }
-    }
-    else
-    {
-        // Se ele NÃO pôde se mover, significa que colidiu com um teto (subindo) ou chão (descendo)
-        if (player->speed_y < 0)
-        {
-            // Bateu a cabeça no teto: zera a velocidade para começar a cair imediatamente
-            player->speed_y = 0; 
-        }
-        else if (player->speed_y > 0)
-        {
-            // Pousou no chão ou está parado
-            player->is_grounded = true;
-            player->speed_y = 0; // enquanto o player estiver no chao, sua velocidade vertical será zero
-        }
+
+            // Se o jogador apertar ESPAÇO, ele pula
+            if (IsKeyPressed(KEY_SPACE))
+            {
+                player->state = AIRBORNE;
+                
+                player->speed_y = JUMP_FORCE;
+
+                // Calcula a distância que ele quer andar no eixo Y neste frame
+                float dy = player->speed_y * dt;
+
+                if (can_move_to(map, player->x, player->y + dy, player->width, player->height))
+                {
+                    player->y += dy;
+                }
+            }
+
+            // Se não tiver chão ou escada embaixo do jogador, ele cai
+            if (can_move_to(map, player->x, player->y + TILE_SIZE, player->width, player->height) && (!is_ladder_down(map, player->x, player->y)))
+            {
+                player->state = AIRBORNE;
+                // AQUI O PERSONAGEM ESPERA 1 FRAME PARA CAIR, ANTES ELE COMEÇAVA A CAIR INSTANTÂNEAMENTE
+            }
+
+            // ESCADA
+        
+            // Subir escada
+            if (IsKeyDown(KEY_UP) && is_ladder_start(map, player->x, player->y)) 
+            { 
+                // Subir a escada  
+                climb_ladder(player, -1); 
+            }
+
+            // Descer escada
+            if (IsKeyDown(KEY_DOWN) && is_ladder_down(map, player->x, player->y))
+            {
+                climb_ladder(player, 1);
+            }
+
+            break;
+
+        case AIRBORNE:
+
+            // Aplica a gravidade continuamente
+            player->speed_y += GRAVITY * dt;
+
+            // Calcula a distância que ele quer andar no eixo Y neste frame
+            float dy = player->speed_y * dt;
+
+            // Verifica se pode se mover no eixo y
+            if (can_move_to(map, player->x, player->y + dy, player->width, player->height))
+            {
+                // se ele estiver caindo E estiver em um D, ele para
+
+                // Atualiza a posição vertical
+                player->y += dy;
+            }
+            else
+            {
+                // Se ele NÃO pôde se mover, significa que colidiu com um teto (subindo) ou chão (descendo)
+                if (player->speed_y < 0)
+                {
+                    // Bateu a cabeça no teto: zera a velocidade para começar a cair imediatamente
+                    player->speed_y = 0; 
+                }
+                else if (player->speed_y > 0)
+                {
+                    // Pousou no chão
+
+                    // esse while evita que o player fique flutuando (alguns pixels acima da plataforma)
+                    while(can_move_to(map, player->x, player->y + 1, player->width, player->height))
+                    {
+                        player->y++;
+                    }
+                    player->state = GROUNDED;
+                    player->speed_y = 0; // enquanto o player estiver no chao, sua velocidade vertical será zero
+                }
+            }
+
+            break;
+
+        case CLIMBING:
+            break;
     }
 }
 
