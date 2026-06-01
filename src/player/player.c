@@ -90,13 +90,35 @@ static void climb_ladder(Player *player, char map[MAP_ROWS][MAP_COLS], float dt)
     if (IsKeyDown(KEY_DOWN)) dy += LADDER_SPEED * dt;
     if (IsKeyDown(KEY_UP)) dy -= LADDER_SPEED * dt;
     
-    // Verificar se ele pode se mover 
-    if ((is_solid_tile(map, player->x + (TILE_SIZE/2), player->y + dy + TILE_SIZE -1)) || (is_ladder_down(map, player->x, player->y + TILE_SIZE -1) && (dy < 0)))
+    // Verifica se o player colidiu com uma plataforma (ou saiu da tela por consequencia)
+    if (is_solid_tile(map, player->x + (TILE_SIZE/2), player->y + dy + TILE_SIZE -1))
     {
         player->state = GROUNDED;
+
+        // esse while evita que o player fique flutuando (alguns pixels acima da plataforma)
+        while((!is_solid_tile(map, player->x + (TILE_SIZE/2), player->y + dy + TILE_SIZE)))
+        {
+            player->y++;
+        }
+
         return;
     }
 
+    // Verifica se o player chegou no topo da escada
+    if (is_ladder_down(map, player->x, player->y + TILE_SIZE -1) && (dy < 0))
+    {
+        player->state = GROUNDED;
+
+        // esse while evita que o player fique flutuando (alguns pixels acima da plataforma) ou que ele caia da escada
+        while(!(is_ladder_down(map, player->x, player->y)))
+        {
+            player->y++;
+        }
+    
+        return;
+    }
+
+    // Atualiza a posição vertical do player
     player->y += dy;
 }
 

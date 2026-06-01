@@ -12,6 +12,8 @@ Bugs:
 
 - as vezes o player pula no final da escada e cai da escada
 
+    ACHO que corrigi, se ver algo estranho no comportamento da escada avisar que arrumo
+
 - Fazer o player nao cair da escada quando ta caindo? nao sei se é bug ou não
 
 Próximos passos:
