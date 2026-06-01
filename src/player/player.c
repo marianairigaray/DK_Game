@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "player.h"
 #include "map.h"
+#include "save.h"
 
 #include <stdbool.h>
 
@@ -89,6 +90,9 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
     // Inicializa o estado do jogador como no chão
     player.state = GROUNDED;
 
+    // Inicializa as vidas do jogador
+    player.lives = load_game_lives(3);
+    
     for (int row = 0; row < MAP_ROWS; row++)
     {
         for (int col = 0; col < MAP_COLS; col++)
@@ -97,6 +101,8 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
             {
                 player.x = col * TILE_SIZE;
                 player.y = row * TILE_SIZE;
+                player.spawn_x = player.x; // Salva a posição de spawn do jogador
+                player.spawn_y = player.y; // Salva a posição de spawn do jogador
                 map[row][col] = ' ';
                 return player;
             }

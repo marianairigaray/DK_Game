@@ -5,7 +5,7 @@ CC = gcc
 RAYLIB_PATH = ./libs/raylib/raylib-6.0_win64_mingw-w64
 
 # Define compiler flags
-CFLAGS = -I"$(RAYLIB_PATH)/include" -Iinclude
+CFLAGS = -I"$(RAYLIB_PATH)/include" -Iinclude -Isrc/map -Isrc/player -Isrc/enemy -Isrc/collision -Isrc/save
 
 # Define linker flags
 LDFLAGS = -L"$(RAYLIB_PATH)/lib"
@@ -17,7 +17,7 @@ LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
 TARGET = main.exe
 
 all: # main.exe depends on main.o
-	$(CC) $(CFLAGS) -g src/main.c src/map/map.c src/player/player.c src/enemy/enemy.c -o $(TARGET) $(LDFLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) -g src/main.c src/map/map.c src/player/player.c src/enemy/enemy.c src/collision/collision.c src/save/save.c -o $(TARGET) $(LDFLAGS) $(LDLIBS)
 
 run:
 	./$(TARGET)

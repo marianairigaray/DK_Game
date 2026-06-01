@@ -5,6 +5,8 @@
 #include "enemy.h"
 #include "map.h"
 #include "player.h"
+#include "collision.h"
+#include "save.h"
 
 int main(void)
 {
@@ -37,7 +39,8 @@ int main(void)
     {
         update_player(&player, map);
         move_enemies(map, enemies, enemy_count);
-
+        check_player_enemy_collisions(&player, enemies, enemy_count, map);
+        
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
@@ -45,6 +48,8 @@ int main(void)
         draw_player(player);
         draw_enemies(enemies, enemy_count);
 
+        DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
+        
         EndDrawing();
     }
 

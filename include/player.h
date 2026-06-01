@@ -22,10 +22,16 @@ typedef struct
     int is_grounded;
     int speed_y;
     States state;
+    int lives;
+    float spawn_x;
+    float spawn_y;
+
 } Player;
 
 Player create_player(char map[MAP_ROWS][MAP_COLS]);
 void update_player(Player *player, char map[MAP_ROWS][MAP_COLS]);
 void draw_player(Player player);
+void save_game_lives(int lives);
+int load_game_lives(int default_lives);
 
 #endif
