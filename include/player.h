@@ -3,6 +3,8 @@
 
 #include "map.h"
 
+#define LADDER_SPEED 80
+
 typedef enum
 {
     GROUNDED,   // Estado padrão (parado ou andando sobre a plataforma)

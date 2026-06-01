@@ -4,6 +4,7 @@
 #include "save.h"
 
 #include <stdbool.h>
+#include <stdio.h>
 
 // Constantes de física (você pode ajustar esses valores para mudar a sensação do pulo)
 #define GRAVITY 600.0f      // Força que puxa o player para baixo
@@ -33,15 +34,14 @@ static bool can_move_to(char map[MAP_ROWS][MAP_COLS], float x, float y, float wi
 static bool is_ladder_start(char map[MAP_ROWS][MAP_COLS], float x, float y) 
 { 
     int row = (int) y / TILE_SIZE; 
-    int left_border = (int) x / TILE_SIZE; 
-    int right_border = (int) (x + TILE_SIZE-1) / TILE_SIZE; 
+    int col = (int) (x + (TILE_SIZE/2)) / TILE_SIZE;
 
-    if (map[row][left_border] == 'S') 
+    if (map[row][col] == 'S') 
     { 
         return true; 
     } 
     
-    if (map[row][right_border] == 'S') 
+    if (map[row][col] == 'S') 
     { 
         return true; 
     } 
@@ -52,15 +52,14 @@ static bool is_ladder_start(char map[MAP_ROWS][MAP_COLS], float x, float y)
 static bool is_ladder_down(char map[MAP_ROWS][MAP_COLS], float x, float y)
 {
     int row = (int) y / TILE_SIZE; 
-    int left_border = (int) x / TILE_SIZE; 
-    int right_border = (int) (x + TILE_SIZE-1) / TILE_SIZE; 
+    int col = (int) (x + (TILE_SIZE/2)) / TILE_SIZE;
 
-    if (map[row][left_border] == 'D') 
+    if (map[row][col] == 'D') 
     { 
         return true; 
     } 
     
-    if (map[row][right_border] == 'D') 
+    if (map[row][col] == 'D') 
     { 
         return true; 
     } 
@@ -68,10 +67,49 @@ static bool is_ladder_down(char map[MAP_ROWS][MAP_COLS], float x, float y)
     return false; 
 }
 
-static void climb_ladder(Player *player, int dir) 
-{ 
-    player->speed_y = 0; // APAGAR
-    player->y += 4 * TILE_SIZE * dir;
+static void align_player_ladder(Player *player)
+{
+    // Encontra a coluna da matriz correspondente ao centro do player
+    int col = (int) (player->x + (TILE_SIZE/2)) / TILE_SIZE;
+
+    // Descobre a coordenada X do primeiro pixel da coluna
+    int ladder_x = col * TILE_SIZE;
+
+    // Calcula o deslocamento necessário para alinhar o player com a escada
+    // A diferença entre o primeiro pixel da escada e o do player é o quanto precisamos alinhar
+    float align_offset = (float) ladder_x - player->x;
+
+    // Aplica o alinhamento
+    player->x += align_offset;
+}
+
+static void climb_ladder(Player *player, char map[MAP_ROWS][MAP_COLS], float dt) 
+{
+    float dy = 0;
+    
+    if (IsKeyDown(KEY_DOWN)) dy += LADDER_SPEED * dt;
+    if (IsKeyDown(KEY_UP)) dy -= LADDER_SPEED * dt;
+    
+    // Verificar se ele pode se mover 
+    if ((is_solid_tile(map, player->x + (TILE_SIZE/2), player->y + dy + TILE_SIZE -1)) || (is_ladder_down(map, player->x, player->y + TILE_SIZE -1) && (dy < 0)))
+    {
+        player->state = GROUNDED;
+        return;
+    }
+
+    player->y += dy;
+}
+
+static void move_player_x(Player *player, char map[MAP_ROWS][MAP_COLS], float dx, float dt)
+{
+    // --- MOVIMENTO HORIZONTAL ---
+    if (IsKeyDown(KEY_RIGHT)) dx += player->speed * dt;
+    if (IsKeyDown(KEY_LEFT))  dx -= player->speed * dt;
+
+    if (can_move_to(map, player->x + dx, player->y, player->width, player->height))
+    {
+        player->x += dx;
+    }
 }
 
 Player create_player(char map[MAP_ROWS][MAP_COLS])
@@ -116,20 +154,11 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
     float dt = GetFrameTime();
     float dx = 0.0f;
 
-    // --- MOVIMENTO HORIZONTAL ---
-    if (IsKeyDown(KEY_RIGHT)) dx += player->speed * dt;
-    if (IsKeyDown(KEY_LEFT))  dx -= player->speed * dt;
-
-    if (can_move_to(map, player->x + dx, player->y, player->width, player->height))
-    {
-        player->x += dx;
-    }
-
     switch (player->state)
     {
         case GROUNDED:
 
-            player->speed_y = 0;
+            move_player_x(player, map, dx, dt);
 
             // Se o jogador apertar ESPAÇO, ele pula
             if (IsKeyPressed(KEY_SPACE))
@@ -159,19 +188,22 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
             // Subir escada
             if (IsKeyDown(KEY_UP) && is_ladder_start(map, player->x, player->y)) 
             { 
-                // Subir a escada  
-                climb_ladder(player, -1); 
+                align_player_ladder(player);
+                player->state = CLIMBING;
             }
 
             // Descer escada
             if (IsKeyDown(KEY_DOWN) && is_ladder_down(map, player->x, player->y))
             {
-                climb_ladder(player, 1);
+                align_player_ladder(player);
+                player->state = CLIMBING;
             }
 
             break;
 
         case AIRBORNE:
+
+            move_player_x(player, map, dx, dt);
 
             // Aplica a gravidade continuamente
             player->speed_y += GRAVITY * dt;
@@ -182,8 +214,6 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
             // Verifica se pode se mover no eixo y
             if (can_move_to(map, player->x, player->y + dy, player->width, player->height))
             {
-                // se ele estiver caindo E estiver em um D, ele para
-
                 // Atualiza a posição vertical
                 player->y += dy;
             }
@@ -204,6 +234,7 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
                     {
                         player->y++;
                     }
+
                     player->state = GROUNDED;
                     player->speed_y = 0; // enquanto o player estiver no chao, sua velocidade vertical será zero
                 }
@@ -212,6 +243,9 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
             break;
 
         case CLIMBING:
+
+            climb_ladder(player, map, dt);    
+
             break;
     }
 }
