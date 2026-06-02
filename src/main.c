@@ -78,6 +78,15 @@ int main(void)
                 check_player_enemy_collisions(&player, enemies, enemy_count, map);
 
             break;
+
+            case PAUSED:
+            break;
+
+            case GAME_OVER:
+            break;
+
+            case GAME_EXIT:
+            break;
         }
         //----------------------------------------------------------------------------------
 
