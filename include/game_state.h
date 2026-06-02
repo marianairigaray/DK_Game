@@ -6,7 +6,8 @@ typedef enum
     MENU,
     PLAYING,
     PAUSED,
-    GAME_OVER
+    GAME_OVER,
+    GAME_EXIT
 } Game_state;
 
 #endif

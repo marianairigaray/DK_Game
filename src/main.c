@@ -25,7 +25,8 @@ int main(void)
 
     Game_state game_state = MENU;
     Menu_state menu_state = MAIN_MENU;
-    Menu_options menu_option;
+    Menu_options menu_option = NO_OPTION;
+    menu_init();
 
     char map[MAP_ROWS][MAP_COLS] = {0};
 
@@ -57,14 +58,19 @@ int main(void)
         {
             case MENU:
 
-                if (menu_state == MAIN_MENU)
+                switch (menu_state)
                 {
-                    menu_option = read_option();
+                    case MAIN_MENU:
+                        menu_option = read_option();
+                        game_state = menu(menu_option);
+                    break;
+                
+                    default:
+                        break;
                 }
 
-                game_state = menu(menu_option);
+            break;
 
-                break;
             case PLAYING:
 
                 update_player(&player, map);
