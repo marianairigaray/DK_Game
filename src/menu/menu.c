@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "raylib.h"
+#include "game_state.h"
 
 #define BUTTON_WIDTH 200 // Largura do botão
 #define BUTTON_HEIGHT 50 // Largura do botão
@@ -24,16 +25,18 @@ Menu_options read_option()
     }
 }
 
-void menu(Menu_options menu)
+Game_state menu(Menu_options menu_option)
 {
-    switch (menu)
+    switch (menu_option)
     {
         case NEW_GAME:
             /* code */
             break;
         case CONTINUE:
 
-            break;
+            return PLAYING;
+
+        break;
         case RANKING:
             break;
         case EXIT:

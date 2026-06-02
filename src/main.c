@@ -24,6 +24,8 @@ int main(void)
     srand(time(NULL));
 
     Game_state game_state = MENU;
+    Menu_state menu_state = MAIN_MENU;
+    Menu_options menu_option;
 
     char map[MAP_ROWS][MAP_COLS] = {0};
 
@@ -55,23 +57,12 @@ int main(void)
         {
             case MENU:
 
-                Menu_options menu_option = read_option();
-
-                switch (menu_option)
+                if (menu_state == MAIN_MENU)
                 {
-                    case NEW_GAME:
-                        /* code */
-                        break;
-                    case CONTINUE:
-                        game_state = PLAYING;
-                        break;
-                    case RANKING:
-                        break;
-                    case EXIT:
-                        break;
-                    default:
-                        break;
+                    menu_option = read_option();
                 }
+
+                menu(menu_option);
 
                 break;
             case PLAYING:
