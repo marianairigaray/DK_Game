@@ -14,6 +14,8 @@ Bugs:
 
     ACHO que corrigi, se ver algo estranho no comportamento da escada avisar que arrumo
 
+- as vezes falta o player descer 1 pixel da escada, ai ele flutua no chao (estado: grounded)
+
 - Fazer o player nao cair da escada quando ta caindo? nao sei se é bug ou não
 
 Próximos passos:

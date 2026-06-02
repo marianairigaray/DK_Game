@@ -3,18 +3,27 @@
 #include <time.h>
 #include "raylib.h"
 #include "enemy.h"
+#include "game_state.h"
 #include "map.h"
+#include "menu.h"
 #include "player.h"
 #include "collision.h"
 #include "save.h"
 
 int main(void)
 {
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "DK Game");
+
+    SetTargetFPS(60);
+
+    // Initialize all required variables and load all required data
+
     // Inicializa a semente para geração de números aleatórios
     srand(time(NULL));
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "DK Game");
-    SetTargetFPS(60);
+    Game_state game_state = MENU;
 
     char map[MAP_ROWS][MAP_COLS] = {0};
 
@@ -34,25 +43,79 @@ int main(void)
         printf("Enemy %d x = %f, y = %f\n", i+1, enemies[i].x, enemies[i].y);
         printf("Direction = %d\n", enemies[i].direction);
     }
+    //--------------------------------------------------------------------------------------
 
+    // Main game loop
     while (!WindowShouldClose())
     {
-        update_player(&player, map);
-        move_enemies(map, enemies, enemy_count);
-        check_player_enemy_collisions(&player, enemies, enemy_count, map);
-        
+        // Update
+        //----------------------------------------------------------------------------------
+
+        switch (game_state)
+        {
+            case MENU:
+
+                Menu_options menu_option = read_option();
+
+                switch (menu_option)
+                {
+                    case NEW_GAME:
+                        /* code */
+                        break;
+                    case CONTINUE:
+                        game_state = PLAYING;
+                        break;
+                    case RANKING:
+                        break;
+                    case EXIT:
+                        break;
+                    default:
+                        break;
+                }
+
+                break;
+            case PLAYING:
+
+                update_player(&player, map);
+                move_enemies(map, enemies, enemy_count);
+                check_player_enemy_collisions(&player, enemies, enemy_count, map);
+
+            break;
+        }
+        //----------------------------------------------------------------------------------
+
+        // Draw
+        //----------------------------------------------------------------------------------
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        draw_map(map);
-        draw_player(player);
-        draw_enemies(enemies, enemy_count);
+        switch (game_state)
+        {
+            case MENU:
 
-        DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
+                draw_menu();
+            
+                break;
+            case PLAYING:
+
+                draw_map(map);
+                draw_player(player);
+                draw_enemies(enemies, enemy_count);
+
+                DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
+
+            break;
+        }
         
         EndDrawing();
+        //----------------------------------------------------------------------------------
     }
 
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+
     CloseWindow();
+    //--------------------------------------------------------------------------------------
+
     return 0;
 }
