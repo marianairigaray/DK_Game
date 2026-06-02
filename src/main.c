@@ -62,7 +62,7 @@ int main(void)
                     menu_option = read_option();
                 }
 
-                menu(menu_option);
+                game_state = menu(menu_option);
 
                 break;
             case PLAYING:
