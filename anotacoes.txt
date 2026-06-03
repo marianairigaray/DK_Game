@@ -10,20 +10,24 @@ Bugs:
     x + dx = 582.230.297
     (x + dx) + TITLE_SIZE(20) - 1 = 601.230.297
 
-- as vezes o player pula no final da escada e cai da escada
-
-    ACHO que corrigi, se ver algo estranho no comportamento da escada avisar que arrumo
-
-- as vezes falta o player descer 1 pixel da escada, ai ele flutua no chao (estado: grounded)
-
 - Fazer o player nao cair da escada quando ta caindo? nao sei se é bug ou não
 
 Próximos passos:
 - Sistema de fases
+- Pausar o jogo
+- Tela de "game over" + voltar para o menu principal ou reiniciar o jogo
+- Fechar o jogo pelo menu principal e pela pausa
 - Menu
 - Ranking
 
-Resolvido
+Resolvido:
+
+- as vezes o player pula no final da escada e cai da escada
+
+    ACHO que corrigi, se ver algo estranho no comportamento da escada avisar que arrumo
+
+- as vezes falta o player descer 1 pixel da escada, corrigi (qualquer coisa avisar q arrumo)
+
 - Bug do player ultrapassar a borda horizontal esquerda
 
     trecho de código que causa o bug (linha 20): int col = (int)(x / TILE_SIZE);

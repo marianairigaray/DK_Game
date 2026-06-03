@@ -91,12 +91,12 @@ static void climb_ladder(Player *player, char map[MAP_ROWS][MAP_COLS], float dt)
     if (IsKeyDown(KEY_UP)) dy -= LADDER_SPEED * dt;
     
     // Verifica se o player colidiu com uma plataforma (ou saiu da tela por consequencia)
-    if (is_solid_tile(map, player->x + (TILE_SIZE/2), player->y + dy + TILE_SIZE -1))
+    if (is_solid_tile(map, player->x, player->y + dy + TILE_SIZE -1))
     {
         player->state = GROUNDED;
 
         // esse while evita que o player fique flutuando (alguns pixels acima da plataforma)
-        while((!is_solid_tile(map, player->x + (TILE_SIZE/2), player->y + dy + TILE_SIZE)))
+        while(!is_solid_tile(map, player->x, player->y + TILE_SIZE))
         {
             player->y++;
         }
@@ -142,6 +142,7 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
     player.width = TILE_SIZE;
     player.height = TILE_SIZE;
     player.speed = 180.0f;
+    player.points = 0;
     
     // Inicializa as variáveis de física
     player.speed_y = 0.0f;

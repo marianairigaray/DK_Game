@@ -27,6 +27,7 @@ typedef struct
     int lives;
     float spawn_x;
     float spawn_y;
+    int points;
 
 } Player;
 

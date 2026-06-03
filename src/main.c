@@ -7,6 +7,7 @@
 #include "map.h"
 #include "menu.h"
 #include "player.h"
+#include "points.h"
 #include "collision.h"
 #include "save.h"
 
@@ -76,6 +77,7 @@ int main(void)
                 update_player(&player, map);
                 move_enemies(map, enemies, enemy_count);
                 check_player_enemy_collisions(&player, enemies, enemy_count, map);
+                update_points(map, &player);
 
             break;
 
@@ -109,6 +111,8 @@ int main(void)
                 draw_enemies(enemies, enemy_count);
 
                 DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
+
+                draw_points(&player);
 
             break;
         }
