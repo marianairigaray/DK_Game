@@ -4,20 +4,20 @@ X             F            D
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZHZZ
                            H  
                            H  
-  E           D            S  
-ZZZZZZZZZZZZZZHZZZZZZZZZZZZZZZ
-              H               
-              H               
- DE           S             D 
-ZHZZZZZZZZZZZZZZZZZZZZZZZZZZHZ
- H                          H 
- H                          H 
- SEX                 D  X   S 
-ZZZZZZZZZZZZZZZZZZZZZHZZZZZZZZ
-            X        H        
-                     H        
-X E  D               S        
-Z ZZZHZZZZZZZZZZZZZZZZZZZZZZZZ
+D E           D            S  
+HZZZZZZZZZ          ZZZZZZZZZZ
+H                             
+H                             
+SDE                         D 
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZHZ
+                            H 
+                            H 
+ DEX                    X   S 
+ZHZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+ H                          X 
+ H                            
+XSE  D                      E 
+ZZZZZH     ZZZZZZZZZ    ZZZZZZ
      H                        
      H                        
   E  S   X             D      

@@ -29,6 +29,8 @@ int main(void)
     Menu_options menu_option = NO_OPTION;
     menu_init();
 
+    int current_level = 0; // Começa no nível 0 (map0.txt)
+
     char map[MAP_ROWS][MAP_COLS] = {0};
 
     read_map(map, 0);
@@ -79,7 +81,26 @@ int main(void)
                 check_player_enemy_collisions(&player, enemies, enemy_count, map);
                 update_points(map, &player);
 
-            break;
+                // --- ADICIONE ESTE BLOCO ABAIXO: ---
+                if (check_level_complete(player, map))
+                {
+                    current_level++; // Avança o número do nível
+                    
+                    // Como você tem o map0.txt e map1.txt, se passar do mapa 1 ele volta pro 0.
+                    // Se você criar um map2.txt, map3.txt, mude o número abaixo (ex: current_level > 3)
+                    if (current_level > 1) 
+                    {
+                        current_level = 0; // Reinicia no mapa 0 (ou mude para game_state = MENU se preferir acabar o jogo)
+                    }
+                    
+                    // Carrega o novo mapa limpando o antigo e mantendo as vidas atuais (true)
+                    load_level(current_level, map, &player, enemies, &enemy_count, true);
+                    
+                    printf("Nivel %d carregado com sucesso!\n", current_level);
+                }
+                // ------------------------------------
+
+                break;
 
             case PAUSED:
             break;
