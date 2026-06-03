@@ -7,7 +7,9 @@
 #define BUTTON_HEIGHT 50 // Largura do botão
 #define PADDING 10 // Espaço entre os botões
 
-static Rectangle buttons[NUM_BUTTONS] = { 100, 150, BUTTON_WIDTH, BUTTON_HEIGHT };
+static Rectangle buttons[NUM_BUTTONS] = { 0 };
+static unsigned int button_selector = 0;
+static bool button_hoover[NUM_BUTTONS] = { false };
 
 void menu_init()
 {
@@ -25,36 +27,65 @@ Menu_options read_option()
 {
     Vector2 mouse_positon = GetMousePosition();
 
-    if (CheckCollisionPointRec(mouse_positon, buttons[NEW_GAME]))
+    // Reseta o hoover
+    for (int i = 0; i < NUM_BUTTONS; i++)
+        button_hoover[i] = false;
+
+    // SELEÇÃO DO MENU POR MOUSE
+
+    // Verifica se houve colisão do mouse com cada um dos NUM_BUTTONS botões
+    for (int i = 0; i < NUM_BUTTONS; i++)
     {
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (CheckCollisionPointRec(mouse_positon, buttons[i]))
         {
-            return NEW_GAME;
+            button_selector = i;
+
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                return button_selector;
+            }
         }
     }
 
-    if (CheckCollisionPointRec(mouse_positon, buttons[CONTINUE]))
+    // SELEÇÃO DO MENU POR TECLADO
+
+    if (IsKeyPressed(KEY_UP))
     {
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        // Se o botão atualmente em foco não for o primeiro
+        if (button_selector > 0)
         {
-            return CONTINUE;
+            // Move o foco para o botão anterior (subir no menu)
+            button_selector--;
+        }
+        else
+        {
+            // Efeito "Loop": Se estiver no topo (primeiro botão), move o foco para o último botão
+            button_selector = NUM_BUTTONS - 1;
         }
     }
 
-    if (CheckCollisionPointRec(mouse_positon, buttons[RANKING]))
+    if (IsKeyPressed(KEY_DOWN))
     {
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        // Se o botão atualmente em foco não for o último
+        if (button_selector < NUM_BUTTONS - 1)
         {
-            return RANKING;
+            // Move o foco para o próximo botão (descer no menu)
+            button_selector++;
+        }
+        else
+        {
+            // Efeito "Loop": Se estiver no último botão, move o foco para o primeiro botão
+            button_selector = 0;
         }
     }
 
-    if (CheckCollisionPointRec(mouse_positon, buttons[EXIT]))
+    // Da hoover no botão em foco
+    button_hoover[button_selector] = true;
+
+    // Seleciona a opção do menu equivalente ao "index" do botão selecionado (as opções do menu são um enum)
+    if (IsKeyPressed(KEY_ENTER))
     {
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            return EXIT;
-        }
+        return button_selector;
     }
 
     return NO_OPTION;
@@ -92,12 +123,11 @@ void draw_menu()
 
     for (int i = 0; i < NUM_BUTTONS; i++)
     {
-        DrawRectangleRec(buttons[i], RED);
+        DrawRectangleRec(buttons[i], button_hoover[i] ? RED : GRAY);
     }
 
     DrawText("NEW GAME", 100, 150, 20, BLACK);
     DrawText("CONTINUE GAME", 100, 210, 20, BLACK);
     DrawText("RANK", 100, 270, 20, BLACK);
     DrawText("EXIT", 100, 330, 20, BLACK);
-    
 }
