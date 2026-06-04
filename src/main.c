@@ -106,14 +106,22 @@ int main(void)
                     
                     printf("Nivel %d carregado com sucesso!\n", current_level);
                 }
+
+                if (!player.is_active)
+                {
+                    game_state = GAME_OVER;
+                }
                 // ------------------------------------
 
-                break;
+            break;
 
             case PAUSED:
             break;
 
             case GAME_OVER:
+                
+                game_over(&game_state);
+
             break;
 
             case EXIT:
@@ -132,7 +140,7 @@ int main(void)
 
                 draw_menu();
             
-                break;
+            break;
             case PLAYING:
 
                 draw_map(map);
@@ -142,6 +150,11 @@ int main(void)
                 DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
 
                 draw_points(&player);
+
+            break;
+            case GAME_OVER:
+                
+                draw_game_over();
 
             break;
         }

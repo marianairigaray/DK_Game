@@ -143,6 +143,7 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
     player.height = TILE_SIZE;
     player.speed = 180.0f;
     player.points = 0;
+    player.is_active = true;
     
     // Inicializa as variáveis de física
     player.speed_y = 0.0f;

@@ -1,4 +1,5 @@
 #include "game_state.h"
+#include "raylib.h"
 #include "map.h"
 #include "player.h"
 #include "save.h"
@@ -47,4 +48,21 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
     // 6. Zera o contador de inimigos e cria os novos inimigos desta fase
     *enemy_count = 0;
     create_enemies(enemies, map, enemy_count);
+}
+
+void game_over(Game_state *game_state)
+{
+     
+    // caso top 10 -> perguntar nome e salvar placar
+
+    // mostrar o placar
+
+    // voltar para o menu (caso o usuario digite ou pressione alguma tecla)
+    if (IsKeyDown(KEY_SPACE)) *game_state = MENU;
+}
+
+void draw_game_over()
+{
+    DrawText("GAME_OVER", 10, 10, 40, BLACK);
+    DrawText("Pressione [SPACE] para voltar ao menu", 10, 60, 15, BLACK);
 }
