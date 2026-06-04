@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "map.h"
 #include "player.h"
+#include "points.h"
 #include "save.h"
 #include "enemy.h"
 #include <stdbool.h>
@@ -13,6 +14,9 @@ void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player,
 
     // reseta vidas do player
     save_game_lives(DEFAULT_LIVES);
+
+    // reseta os pontos do player
+    save_score(0);
 
     // reseta player
     *player = create_player(map);

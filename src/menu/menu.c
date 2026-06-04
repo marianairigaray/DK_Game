@@ -128,6 +128,6 @@ void draw_menu()
 
     DrawText("NEW GAME", 100, 150, 20, BLACK);
     DrawText("CONTINUE GAME", 100, 210, 20, BLACK);
-    DrawText("RANK", 100, 270, 20, BLACK);
+    DrawText("RANKING", 100, 270, 20, BLACK);
     DrawText("EXIT", 100, 330, 20, BLACK);
 }
