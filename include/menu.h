@@ -11,10 +11,10 @@ typedef enum
 
 typedef enum 
 {
-    NEW_GAME,
-    CONTINUE,
-    RANKING,
-    EXIT,
+    MENU_NEW_GAME,    
+    MENU_CONTINUE,
+    MENU_RANKING,
+    MENU_EXIT,
     NO_OPTION
 } Menu_options;
 

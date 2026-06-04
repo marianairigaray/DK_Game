@@ -1,8 +1,25 @@
 #include "game_state.h"
 #include "map.h"
 #include "player.h"
+#include "save.h"
 #include "enemy.h"
 #include <stdbool.h>
+
+void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count)
+{
+    // reseta mapa
+    read_map(map, current_level);
+
+    // reseta vidas do player
+    save_game_lives(DEFAULT_LIVES);
+
+    // reseta player
+    *player = create_player(map);
+
+    // reseta inimigos
+    *enemy_count = 0;
+    create_enemies(enemies, map, enemy_count);
+}
 
 void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, bool keep_lives) 
 {

@@ -95,20 +95,20 @@ Game_state menu(Menu_options menu_option)
 {
     switch (menu_option)
     {
-        case NEW_GAME:
+        case MENU_NEW_GAME:
+
+            return NEW_GAME;
+        break;
+        case MENU_CONTINUE:
 
             return PLAYING;
         break;
-        case CONTINUE:
-
-            return PLAYING;
-        break;
-        case RANKING:
+        case MENU_RANKING:
 
         break;
-        case EXIT:
+        case MENU_EXIT:
 
-            return GAME_EXIT;
+            return EXIT;
         break;
         default:
 

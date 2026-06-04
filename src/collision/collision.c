@@ -34,7 +34,7 @@ void check_player_enemy_collisions(Player *player, Enemy enemies[MAX_ENEMIES], i
                 // Se não deu Game Over, apenas joga o player para o início do mapa
                 player->x = player->spawn_x; 
                 player->y = player->spawn_y; 
-                
+                player->state = GROUNDED;
             }
             
             break; // Para o laço para evitar checar múltiplas colisões no mesmo frame

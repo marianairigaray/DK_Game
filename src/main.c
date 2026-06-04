@@ -33,7 +33,7 @@ int main(void)
 
     char map[MAP_ROWS][MAP_COLS] = {0};
 
-    read_map(map, 0);
+    read_map(map, current_level);
 
     Player player = create_player(map);
 
@@ -74,6 +74,14 @@ int main(void)
 
             break;
 
+            case NEW_GAME:
+
+                reset_game(map, current_level, &player, enemies, &enemy_count);
+
+                game_state = PLAYING;
+
+            break;
+
             case PLAYING:
 
                 update_player(&player, map);
@@ -108,7 +116,7 @@ int main(void)
             case GAME_OVER:
             break;
 
-            case GAME_EXIT:
+            case EXIT:
             break;
         }
         //----------------------------------------------------------------------------------
