@@ -3,10 +3,15 @@
 
 #include "game_state.h"
 
+#define NUM_BUTTONS 4 // Numero de botões
+#define BUTTON_WIDTH 200 // Largura do botão
+#define BUTTON_HEIGHT 50 // Largura do botão
+#define PADDING 10 // Espaço entre os botões
+
 typedef enum
 {
     MAIN_MENU,
-    RANK
+    RANKING
 } Menu_state;
 
 typedef enum 
@@ -20,7 +25,7 @@ typedef enum
 
 void menu_init();
 void draw_menu();
-Game_state menu(Menu_options menu_option);
+Game_state menu(Menu_options menu_option, Menu_state *menu_state);
 Menu_options read_option();
 
 #endif

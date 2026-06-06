@@ -16,9 +16,16 @@ typedef enum
     EXIT
 } Game_state;
 
+typedef enum Game_over_states
+{
+    GAME_OVER_SCREEN,
+    INPUT_NAME,
+    VIEW_RANKING
+} Game_over_states;
+
 void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count);
 void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, bool keep_lives);
-void game_over(Game_state *game_state);
+void game_over(Game_over_states *game_over_state);
 void draw_game_over();
 
 #endif

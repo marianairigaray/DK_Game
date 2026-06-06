@@ -9,6 +9,7 @@
 #include "player.h"
 #include "points.h"
 #include "collision.h"
+#include "ranking.h"
 #include "save.h"
 
 int main(void)
@@ -28,6 +29,10 @@ int main(void)
     Menu_state menu_state = MAIN_MENU;
     Menu_options menu_option = NO_OPTION;
     menu_init();
+
+    Game_over_states game_over_state = GAME_OVER_SCREEN;
+
+    Ranking ranked_player = {0};
 
     int current_level = 0; // Começa no nível 0 (map0.txt)
 
@@ -65,11 +70,17 @@ int main(void)
                 {
                     case MAIN_MENU:
                         menu_option = read_option();
-                        game_state = menu(menu_option);
+                        game_state = menu(menu_option, &menu_state);
                     break;
                 
-                    default:
-                        break;
+                    case RANKING:
+
+                        if (is_return_main_menu())
+                        {
+                            menu_state = MAIN_MENU;
+                        }
+
+                    break;
                 }
 
             break;
@@ -120,7 +131,22 @@ int main(void)
 
             case GAME_OVER:
                 
-                game_over(&game_state);
+                switch(game_over_state)
+                {
+                    case GAME_OVER_SCREEN:
+
+                        game_over(&game_over_state);
+
+                    break;
+                    case INPUT_NAME:
+
+                        update_ranking(player.points, &ranked_player);
+
+                    break;
+
+                    case VIEW_RANKING:
+                    break;
+                }
 
             break;
 
@@ -138,8 +164,22 @@ int main(void)
         {
             case MENU:
 
-                draw_menu();
-            
+                switch (menu_state)
+                {
+                    case MAIN_MENU:
+
+                        draw_menu();
+
+                    break;
+                
+                    case RANKING:
+
+                        draw_ranking();
+
+                    break;
+                }
+
+                
             break;
             case PLAYING:
 
@@ -154,7 +194,23 @@ int main(void)
             break;
             case GAME_OVER:
                 
-                draw_game_over();
+                switch(game_over_state)
+                {
+                    case GAME_OVER_SCREEN:
+
+                        draw_game_over();
+
+                    break;
+
+                    case INPUT_NAME:
+
+                        draw_input_name_screen(ranked_player);
+
+                    break;
+
+                    case VIEW_RANKING:
+                    break;
+                }
 
             break;
         }

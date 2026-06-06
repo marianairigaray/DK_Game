@@ -2,11 +2,6 @@
 #include "raylib.h"
 #include "game_state.h"
 
-#define NUM_BUTTONS 4 // Numero de botões
-#define BUTTON_WIDTH 200 // Largura do botão
-#define BUTTON_HEIGHT 50 // Largura do botão
-#define PADDING 10 // Espaço entre os botões
-
 static Rectangle buttons[NUM_BUTTONS] = { 0 };
 static unsigned int button_selector = 0;
 static bool button_hoover[NUM_BUTTONS] = { false };
@@ -91,7 +86,7 @@ Menu_options read_option()
     return NO_OPTION;
 }
 
-Game_state menu(Menu_options menu_option)
+Game_state menu(Menu_options menu_option, Menu_state *menu_state)
 {
     switch (menu_option)
     {
@@ -105,6 +100,8 @@ Game_state menu(Menu_options menu_option)
         break;
         case MENU_RANKING:
 
+            *menu_state = RANKING;
+            return MENU;
         break;
         case MENU_EXIT:
 

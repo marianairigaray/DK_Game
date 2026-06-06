@@ -54,19 +54,14 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
     create_enemies(enemies, map, enemy_count);
 }
 
-void game_over(Game_state *game_state)
+void game_over(Game_over_states *game_over_state)
 {
-     
-    // caso top 10 -> perguntar nome e salvar placar
-
-    // mostrar o placar
-
     // voltar para o menu (caso o usuario digite ou pressione alguma tecla)
-    if (IsKeyDown(KEY_SPACE)) *game_state = MENU;
+    if (IsKeyDown(KEY_SPACE)) *game_over_state = INPUT_NAME;
 }
 
 void draw_game_over()
 {
     DrawText("GAME_OVER", 10, 10, 40, BLACK);
-    DrawText("Pressione [SPACE] para voltar ao menu", 10, 60, 15, BLACK);
+    DrawText("Press [SPACE] to continue", 10, 60, 15, BLACK);
 }
