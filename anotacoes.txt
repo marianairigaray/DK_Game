@@ -1,6 +1,10 @@
 
 Bugs:
 
+- o que fazer quando da game over e o user seleciona CONTINUE no menu
+
+- questão com o salvamento dos pontos do player (esqueci)
+
 - Bug de as vezes o player não encostar nas paredes
 
     como o player anda de 3 em 3 pixels, as vezes, se ele andar mais 3 pixels ele bateria em uma parede, entao o teste de colisão
@@ -13,11 +17,9 @@ Bugs:
 - Fazer o player nao cair da escada quando ta caindo? nao sei se é bug ou não
 
 Próximos passos:
-- Salvar os pontos para a opção de continue do menu
+- Mostrar o Ranking
 - Pausar o jogo
 - Fechar o jogo pelo menu principal e pela pausa
-- Menu
-- Ranking
 
 Resolvido:
 

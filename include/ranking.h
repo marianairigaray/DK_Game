@@ -13,7 +13,8 @@ typedef struct Ranking
     int score;
 } Ranking;
 
-void update_ranking(int score, Ranking *ranked_player);
+bool is_ranked(Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score);
+bool update_ranking(Ranking ranking[MAX_RANKING_ENTRIES], Ranking *ranked_player, int *ranked_players, int score);
 bool is_return_main_menu();
 void draw_input_name_screen(Ranking ranked_player);
 void draw_ranking();

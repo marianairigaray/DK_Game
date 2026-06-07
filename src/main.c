@@ -32,7 +32,9 @@ int main(void)
 
     Game_over_states game_over_state = GAME_OVER_SCREEN;
 
+    Ranking ranking[MAX_RANKING_ENTRIES] = {0};
     Ranking ranked_player = {0};
+    int ranked_players = 0;
 
     int current_level = 0; // Começa no nível 0 (map0.txt)
 
@@ -135,16 +137,24 @@ int main(void)
                 {
                     case GAME_OVER_SCREEN:
 
-                        game_over(&game_over_state);
+                        game_over(&game_over_state, ranking, &ranked_players, player.points);
 
                     break;
+
                     case INPUT_NAME:
 
-                        update_ranking(player.points, &ranked_player);
+                        if (update_ranking(ranking, &ranked_player, &ranked_players, player.points)) game_over_state = VIEW_RANKING;
 
                     break;
 
                     case VIEW_RANKING:
+
+                        if (is_return_main_menu())
+                        {
+                            game_over_state = GAME_OVER_SCREEN;
+                            game_state = MENU;
+                        }
+
                     break;
                 }
 
@@ -209,6 +219,9 @@ int main(void)
                     break;
 
                     case VIEW_RANKING:
+
+                        draw_ranking();
+
                     break;
                 }
 

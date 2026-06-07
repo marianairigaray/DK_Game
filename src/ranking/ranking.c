@@ -12,7 +12,6 @@
 // caso o arquivo exista, ela retorna o ranking com as informações salvas do arquivo
 static int load_ranking(Ranking ranking[MAX_RANKING_ENTRIES])
 {
-
     // Zera o ranking recebido
     for (int i = 0; i < MAX_RANKING_ENTRIES; i++)
     {
@@ -32,8 +31,6 @@ static int load_ranking(Ranking ranking[MAX_RANKING_ENTRIES])
     
     fclose(file);
 
-    printf("entries read = %d\n", entries_read);
-
     return entries_read;
 }
 
@@ -52,14 +49,6 @@ static void save_ranking(Ranking ranking[MAX_RANKING_ENTRIES], const int ranked_
     fwrite(ranking, sizeof(Ranking), ranked_players, file);
 
     fclose(file);
-}
-
-static bool is_ranked(Ranking ranking[MAX_RANKING_ENTRIES], int score) 
-{
-    if (score > ranking[MAX_RANKING_ENTRIES-1].score)
-        return true;
-
-    return false;
 }
 
 static void insert_in_ranking(Ranking ranking[MAX_RANKING_ENTRIES], Ranking *ranked_player, const int ranked_players)
@@ -126,33 +115,34 @@ static int get_name(Ranking *ranked_player)
     return 1; // ainda faltam caracteres
 }
 
-void update_ranking(int score, Ranking *ranked_player)
+bool is_ranked(Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score) 
 {
-    Ranking ranking[MAX_RANKING_ENTRIES];
-
     // Carrega o ranking salvo; load_ranking retorna o numero de ranked players lido
-    int ranked_players = load_ranking(ranking);
+    *ranked_players = load_ranking(ranking);
 
-    if (is_ranked(ranking, score))
+    if (score > ranking[MAX_RANKING_ENTRIES-1].score)
+        return true;
+
+    return false;
+}
+
+bool update_ranking(Ranking ranking[MAX_RANKING_ENTRIES], Ranking *ranked_player, int *ranked_players, int score)
+{
+    // Lê o nome do player
+    if (get_name(ranked_player))
     {
-        // Incrementa o contador de playes no ranking
-        if (ranked_players < MAX_RANKING_ENTRIES) ranked_players++;
-
-        // Lê o nome do player
-        if (get_name(ranked_player))
-        {
-            return; // nome ainda esta sendo digitado (demora varios frames para ser completamente digitado)
-        }
-
-        // Salva a score do player
-        ranked_player->score = score;
-
-        printf("Ranked player name: %s\n", ranked_player->name);
-
-        insert_in_ranking(ranking, ranked_player, ranked_players);
+        return false; // nome ainda esta sendo digitado (demora varios frames para ser completamente digitado)
     }
-    
-    return;
+
+    // Salva a score do player
+    ranked_player->score = score;
+
+    // Incrementa o contador de playes no ranking
+    if (*ranked_players < MAX_RANKING_ENTRIES) (*ranked_players)++; // deposito todo meu odio ao c nessa linha
+
+    insert_in_ranking(ranking, ranked_player, *ranked_players);
+
+    return true;
 }
 
 bool is_return_main_menu()

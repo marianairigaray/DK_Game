@@ -4,6 +4,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "map.h"
+#include "ranking.h"
 #include <stdbool.h>
 
 typedef enum 
@@ -25,7 +26,7 @@ typedef enum Game_over_states
 
 void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count);
 void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, bool keep_lives);
-void game_over(Game_over_states *game_over_state);
+void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score);
 void draw_game_over();
 
 #endif

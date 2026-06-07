@@ -5,6 +5,7 @@
 #include "points.h"
 #include "save.h"
 #include "enemy.h"
+#include "ranking.h"
 #include <stdbool.h>
 
 void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count)
@@ -54,10 +55,20 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
     create_enemies(enemies, map, enemy_count);
 }
 
-void game_over(Game_over_states *game_over_state)
+void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score)
 {
-    // voltar para o menu (caso o usuario digite ou pressione alguma tecla)
-    if (IsKeyDown(KEY_SPACE)) *game_over_state = INPUT_NAME;
+    // Se o usuário apertar no espaço, ele vai para a tela de rankig ou de inserir o nome no rankig (depende da pontuação)
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        if (is_ranked(ranking, ranked_players, score))
+        {
+            *game_over_state = INPUT_NAME;
+        }
+        else
+        {
+            *game_over_state = VIEW_RANKING;
+        }
+    } 
 }
 
 void draw_game_over()
