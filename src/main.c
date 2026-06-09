@@ -9,6 +9,7 @@
 #include "player.h"
 #include "points.h"
 #include "collision.h"
+#include "ranking.h"
 #include "save.h"
 
 int main(void)
@@ -29,11 +30,17 @@ int main(void)
     Menu_options menu_option = NO_OPTION;
     menu_init();
 
+    Game_over_states game_over_state = GAME_OVER_SCREEN;
+
+    Ranking ranking[MAX_RANKING_ENTRIES] = {0};
+    Ranking ranked_player = {0};
+    int ranked_players = 0;
+
     int current_level = 0; // Começa no nível 0 (map0.txt)
 
     char map[MAP_ROWS][MAP_COLS] = {0};
 
-    read_map(map, 0);
+    read_map(map, current_level);
 
     Player player = create_player(map);
 
@@ -65,12 +72,26 @@ int main(void)
                 {
                     case MAIN_MENU:
                         menu_option = read_option();
-                        game_state = menu(menu_option);
+                        game_state = menu(menu_option, &menu_state);
                     break;
                 
-                    default:
-                        break;
+                    case RANKING:
+
+                        if (is_return_main_menu())
+                        {
+                            menu_state = MAIN_MENU;
+                        }
+
+                    break;
                 }
+
+            break;
+
+            case NEW_GAME:
+
+                reset_game(map, current_level, &player, enemies, &enemy_count);
+
+                game_state = PLAYING;
 
             break;
 
@@ -96,17 +117,48 @@ int main(void)
                     
                     printf("Nivel %d carregado com sucesso!\n", current_level);
                 }
+
+                if (!player.is_active)
+                {
+                    game_state = GAME_OVER;
+                }
                 // ------------------------------------
 
-                break;
+            break;
 
             case PAUSED:
             break;
 
             case GAME_OVER:
+                
+                switch(game_over_state)
+                {
+                    case GAME_OVER_SCREEN:
+
+                        game_over(&game_over_state, ranking, &ranked_players, player.points);
+
+                    break;
+
+                    case INPUT_NAME:
+
+                        if (update_ranking(ranking, &ranked_player, &ranked_players, player.points)) game_over_state = VIEW_RANKING;
+
+                    break;
+
+                    case VIEW_RANKING:
+
+                        if (is_return_main_menu())
+                        {
+                            game_over_state = GAME_OVER_SCREEN;
+                            game_state = MENU;
+                        }
+
+                    break;
+                }
+
             break;
 
-            case GAME_EXIT:
+            case EXIT:
             break;
         }
         //----------------------------------------------------------------------------------
@@ -120,9 +172,23 @@ int main(void)
         {
             case MENU:
 
-                draw_menu();
-            
-                break;
+                switch (menu_state)
+                {
+                    case MAIN_MENU:
+
+                        draw_menu();
+
+                    break;
+                
+                    case RANKING:
+
+                        draw_ranking();
+
+                    break;
+                }
+
+                
+            break;
             case PLAYING:
 
                 draw_map(map);
@@ -132,6 +198,30 @@ int main(void)
                 DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
 
                 draw_points(&player);
+
+            break;
+            case GAME_OVER:
+                
+                switch(game_over_state)
+                {
+                    case GAME_OVER_SCREEN:
+
+                        draw_game_over();
+
+                    break;
+
+                    case INPUT_NAME:
+
+                        draw_input_name_screen(ranked_player);
+
+                    break;
+
+                    case VIEW_RANKING:
+
+                        draw_ranking();
+
+                    break;
+                }
 
             break;
         }

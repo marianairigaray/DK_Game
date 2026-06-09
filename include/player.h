@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "map.h"
+#include <stdbool.h>
 
 #define LADDER_SPEED 80
 
@@ -28,6 +29,7 @@ typedef struct
     float spawn_x;
     float spawn_y;
     int points;
+    bool is_active;
 
 } Player;
 

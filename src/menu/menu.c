@@ -2,11 +2,6 @@
 #include "raylib.h"
 #include "game_state.h"
 
-#define NUM_BUTTONS 4 // Numero de botões
-#define BUTTON_WIDTH 200 // Largura do botão
-#define BUTTON_HEIGHT 50 // Largura do botão
-#define PADDING 10 // Espaço entre os botões
-
 static Rectangle buttons[NUM_BUTTONS] = { 0 };
 static unsigned int button_selector = 0;
 static bool button_hoover[NUM_BUTTONS] = { false };
@@ -91,24 +86,26 @@ Menu_options read_option()
     return NO_OPTION;
 }
 
-Game_state menu(Menu_options menu_option)
+Game_state menu(Menu_options menu_option, Menu_state *menu_state)
 {
     switch (menu_option)
     {
-        case NEW_GAME:
+        case MENU_NEW_GAME:
+
+            return NEW_GAME;
+        break;
+        case MENU_CONTINUE:
 
             return PLAYING;
         break;
-        case CONTINUE:
+        case MENU_RANKING:
 
-            return PLAYING;
+            *menu_state = RANKING;
+            return MENU;
         break;
-        case RANKING:
+        case MENU_EXIT:
 
-        break;
-        case EXIT:
-
-            return GAME_EXIT;
+            return EXIT;
         break;
         default:
 
@@ -128,6 +125,6 @@ void draw_menu()
 
     DrawText("NEW GAME", 100, 150, 20, BLACK);
     DrawText("CONTINUE GAME", 100, 210, 20, BLACK);
-    DrawText("RANK", 100, 270, 20, BLACK);
+    DrawText("RANKING", 100, 270, 20, BLACK);
     DrawText("EXIT", 100, 330, 20, BLACK);
 }

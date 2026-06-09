@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "player.h"
 #include "map.h"
+#include "points.h"
 #include "save.h"
 
 #include <stdbool.h>
@@ -143,6 +144,7 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
     player.height = TILE_SIZE;
     player.speed = 180.0f;
     player.points = 0;
+    player.is_active = true;
     
     // Inicializa as variáveis de física
     player.speed_y = 0.0f;
@@ -153,7 +155,11 @@ Player create_player(char map[MAP_ROWS][MAP_COLS])
 
     // Inicializa as vidas do jogador
     player.lives = load_game_lives(3);
+
+    // Inicializa os pontos do jogador
+    player.points = load_score();
     
+
     for (int row = 0; row < MAP_ROWS; row++)
     {
         for (int col = 0; col < MAP_COLS; col++)

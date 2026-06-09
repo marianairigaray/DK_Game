@@ -27,14 +27,17 @@ void check_player_enemy_collisions(Player *player, Enemy enemies[MAX_ENEMIES], i
                 save_game_lives(3); // Reseta o save para 3 vidas
                 
                 // Reinicia o jogador do zero usando a função existente
-                *player = create_player(map); 
+                *player = create_player(map);
+                
+                // Jogador inativo
+                player->is_active = false;
             }
             else 
             {
                 // Se não deu Game Over, apenas joga o player para o início do mapa
                 player->x = player->spawn_x; 
                 player->y = player->spawn_y; 
-                
+                player->state = GROUNDED;
             }
             
             break; // Para o laço para evitar checar múltiplas colisões no mesmo frame
