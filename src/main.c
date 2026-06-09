@@ -107,7 +107,7 @@ int main(void)
                     current_level++; // Avança o número do nível
                     
                     
-                    if (current_level > 1) 
+                    if (current_level > 2) 
                     {
                         current_level = 0; // Reinicia no mapa 0 (ou mude para game_state = MENU se preferir acabar o jogo)
                     }
