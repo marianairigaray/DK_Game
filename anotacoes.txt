@@ -17,9 +17,10 @@ Bugs:
 - Fazer o player nao cair da escada quando ta caindo? nao sei se é bug ou não
 
 Próximos passos:
-- Mostrar o Ranking
 - Pausar o jogo
 - Fechar o jogo pelo menu principal e pela pausa
+- Salvar o nivel atual do jogador
+- Mostrar o Ranking
 
 Resolvido:
 

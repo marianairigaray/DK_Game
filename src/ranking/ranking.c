@@ -7,6 +7,8 @@
 
 #include "menu.h"
 
+static Rectangle return_button = { 50, 500, BUTTON_WIDTH, BUTTON_HEIGHT };
+
 // Carrega o ranking e salva no array de structs Ranking
 // Essa função recebe um ranking zerado, caso o arquivo não exista, ela retorna o ranking zerado
 // caso o arquivo exista, ela retorna o ranking com as informações salvas do arquivo
@@ -147,18 +149,18 @@ bool update_ranking(Ranking ranking[MAX_RANKING_ENTRIES], Ranking *ranked_player
 
 bool is_return_main_menu()
 {
-    if (IsKeyPressed(KEY_ENTER))
-    {
-        return true;
-    }
+    Vector2 mouse_positon = GetMousePosition();
+    if (CheckCollisionPointRec(mouse_positon, return_button) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) return true;
 
+    if (IsKeyPressed(KEY_ENTER)) return true;
+    
     return false;
 }
 
 void draw_ranking() 
 {
     DrawText("RANKING", 10, 10, 40, BLACK);
-    DrawRectangle(50, 500, BUTTON_WIDTH, BUTTON_HEIGHT, RED);
+    DrawRectangleRec(return_button, RED);
     DrawText("RETURN", 50, 500, 20, BLACK);
 }
 
