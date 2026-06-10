@@ -6,10 +6,56 @@
 #include "save.h"
 #include "enemy.h"
 #include "ranking.h"
+#include <stdio.h>
 #include <stdbool.h>
+
+bool has_active_game() {
+
+    char file_name[] = "./data/save.bin";
+
+    // verificar se o arquivo existe
+    if (!FileExists(file_name))
+    {
+        // se não existir vai direto para o menu
+       return false;
+    }
+
+    // se existir -> vai verificar se existe jogo salvo ou não
+    FILE *save = fopen(file_name, "rb");
+    if (save == NULL)
+    {
+        printf("Could not open %s to read.\n", file_name);
+        return false;
+    }
+
+    bool active_game;
+
+    fread(&active_game, sizeof(bool), 1, save);
+
+    fclose(save);
+
+    return active_game;
+}
+
+static void save_active_game(bool active_game) {
+
+    FILE *file = fopen("./data/save.bin", "wb");
+    if (file == NULL)
+    {
+        printf("Could not open save.bin to write.\n");
+        return;
+    }
+
+    fwrite(&active_game, sizeof(bool), 1, file);
+
+    fclose(file);
+}
 
 void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count)
 {
+    // inicia novo save
+    save_active_game(true);
+
     // reseta mapa
     read_map(map, current_level);
 
@@ -57,6 +103,8 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
 
 void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score)
 {
+    save_active_game(false);
+
     // Se o usuário apertar no espaço, ele vai para a tela de rankig ou de inserir o nome no rankig (depende da pontuação)
     if (IsKeyPressed(KEY_SPACE))
     {

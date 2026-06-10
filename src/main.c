@@ -28,7 +28,8 @@ int main(void)
     Game_state game_state = MENU;
     Menu_state menu_state = MAIN_MENU;
     Menu_options menu_option = NO_OPTION;
-    menu_init();
+    bool active_game = has_active_game();
+    menu_init(active_game);
 
     Game_over_states game_over_state = GAME_OVER_SCREEN;
 
@@ -71,17 +72,16 @@ int main(void)
                 switch (menu_state)
                 {
                     case MAIN_MENU:
-                        menu_option = read_option();
+                        active_game = has_active_game();
+                        menu_option = read_option(active_game);
                         game_state = menu(menu_option, &menu_state);
                     break;
                 
                     case RANKING:
-
                         if (is_return_main_menu())
                         {
                             menu_state = MAIN_MENU;
                         }
-
                     break;
                 }
 
@@ -151,6 +151,7 @@ int main(void)
                         {
                             game_over_state = GAME_OVER_SCREEN;
                             game_state = MENU;
+                            reset_button_selector();
                         }
 
                     break;

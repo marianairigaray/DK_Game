@@ -9,3 +9,4 @@ main
 # Arquivos de save locais do jogo
 save.txt
 score.bin
+save.bin

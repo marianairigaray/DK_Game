@@ -6,7 +6,7 @@ static Rectangle buttons[NUM_BUTTONS] = { 0 };
 static unsigned int button_selector = 0;
 static bool button_hoover[NUM_BUTTONS] = { false };
 
-void menu_init()
+void menu_init(bool active_game)
 {
     // Define a posição e o tamanho dos botões do menu
     for (int i = 0; i < NUM_BUTTONS; i++)
@@ -16,9 +16,12 @@ void menu_init()
         buttons[i].width = BUTTON_WIDTH;
         buttons[i].height = BUTTON_HEIGHT;
     }
+
+    // Define o index do botão em seleção
+    button_selector = active_game ? 0 : 1;
 }
 
-Menu_options read_option()
+Menu_options read_option(bool active_game)
 {
     Vector2 mouse_positon = GetMousePosition();
 
@@ -33,6 +36,9 @@ Menu_options read_option()
     {
         if (CheckCollisionPointRec(mouse_positon, buttons[i]))
         {
+            // Caso selecionado o botão CONTINUAR e não exista um jogo salvo, sai do if e não altera o botão selecionado
+            if ((i == MENU_CONTINUE) && (!active_game)) continue;
+
             button_selector = i;
 
             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -46,11 +52,13 @@ Menu_options read_option()
 
     if (IsKeyPressed(KEY_UP))
     {
-        // Se o botão atualmente em foco não for o primeiro
-        if (button_selector > 0)
+        // Se o botão atualmente em foco não for o primeiro e eu tenho um jogo ativo
+        if ((button_selector > 0))
         {
             // Move o foco para o botão anterior (subir no menu)
             button_selector--;
+
+            if ((!active_game) && (button_selector == 0)) button_selector = NUM_BUTTONS - 1;
         }
         else
         {
@@ -69,8 +77,8 @@ Menu_options read_option()
         }
         else
         {
-            // Efeito "Loop": Se estiver no último botão, move o foco para o primeiro botão
-            button_selector = 0;
+            // Efeito "Loop": Volta para o início do menu (botão 0 (CONTINUE) se houver jogo ativo, ou pula para o botão 1 (NEW GAME))
+            button_selector = active_game ? 0 : 1;
         }
     }
 
@@ -90,13 +98,13 @@ Game_state menu(Menu_options menu_option, Menu_state *menu_state)
 {
     switch (menu_option)
     {
-        case MENU_NEW_GAME:
-
-            return NEW_GAME;
-        break;
         case MENU_CONTINUE:
 
             return PLAYING;
+        break;
+        case MENU_NEW_GAME:
+
+            return NEW_GAME;
         break;
         case MENU_RANKING:
 
@@ -114,6 +122,10 @@ Game_state menu(Menu_options menu_option, Menu_state *menu_state)
     }
 }
 
+void reset_button_selector() {
+    button_selector = NEW_GAME;
+}
+
 void draw_menu()
 {
     DrawText("DONKEY KONG", 10, 10, 40, BLACK);
@@ -123,8 +135,8 @@ void draw_menu()
         DrawRectangleRec(buttons[i], button_hoover[i] ? RED : GRAY);
     }
 
-    DrawText("NEW GAME", 100, 150, 20, BLACK);
-    DrawText("CONTINUE GAME", 100, 210, 20, BLACK);
+    DrawText("CONTINUE GAME", 100, 150, 20, BLACK);
+    DrawText("NEW GAME", 100, 210, 20, BLACK);
     DrawText("RANKING", 100, 270, 20, BLACK);
     DrawText("EXIT", 100, 330, 20, BLACK);
 }

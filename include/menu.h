@@ -16,16 +16,17 @@ typedef enum
 
 typedef enum 
 {
-    MENU_NEW_GAME,    
     MENU_CONTINUE,
+    MENU_NEW_GAME,    
     MENU_RANKING,
     MENU_EXIT,
     NO_OPTION
 } Menu_options;
 
-void menu_init();
+void menu_init(bool active_game);
 void draw_menu();
+void reset_button_selector();
 Game_state menu(Menu_options menu_option, Menu_state *menu_state);
-Menu_options read_option();
+Menu_options read_option(bool active_game);
 
 #endif
