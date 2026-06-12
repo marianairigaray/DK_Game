@@ -24,7 +24,6 @@ void menu_init(bool active_game);
 void draw_menu();
 void reset_button_selector();
 Game_state menu(Menu_options menu_option, Menu_state *menu_state);
-Menu_options read_option(bool active_game); // APAGAR
 Menu_options update_menu(bool active_game);
 
 #endif

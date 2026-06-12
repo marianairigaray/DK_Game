@@ -47,6 +47,8 @@ Menu_options update_menu(bool active_game)
     // Se o mouse clicou em um botão válido, ativa o hoover e retorna o botão selecionado
     if (button_selected != NO_OPTION) 
     {
+        if (button_selected == NEW_GAME) button_selector = MENU_CONTINUE; // Caso o player volte para o menu no meio do jogo, o botão em foco sera o de CONTINUE
+
         button_hoover[button_selected] = true;
         return button_selected;
     }
@@ -70,6 +72,8 @@ Menu_options update_menu(bool active_game)
 
     // Da hoover no botão em foco
     button_hoover[button_selector] = true;
+
+    if (button_selected == NEW_GAME) button_selector = MENU_CONTINUE; // Caso o player volte para o menu no meio do jogo, o botão em foco sera o de CONTINUE
 
     return button_selected;
 }

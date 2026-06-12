@@ -3,8 +3,6 @@ BUGS:
 
 - jogo o jogo 1x -> vou pro ranking. Jogo o jogo de novo (sem fechar), vou pro ranking -> preciso apagar o ultimo nome que escrevi
 
-- retornei do jogo vindo de NEW_GAME para o menu e ele estava em NEW_GAME ao inves de CONTINUE
-
 - se tu morrer e dar new game tu começa da fase em que tu morreu. (pontos e vidas resetam certo).
 
 - toda vez que tu fecha e abre o jogo os pontos (X) retornam no mapa
