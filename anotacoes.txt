@@ -1,6 +1,8 @@
 
 Bugs:
 
+- se tu morrer e dar new game tu começa da fase em que tu morreu. (pontos e vidas resetam certo).
+
 - o que fazer quando da game over e o user seleciona CONTINUE no menu
 
 - questão com o salvamento dos pontos do player (esqueci)

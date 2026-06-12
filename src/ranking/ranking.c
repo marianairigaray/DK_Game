@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "menu.h"
+#include "button.h"
 
 static Rectangle return_button = { 50, 500, BUTTON_WIDTH, BUTTON_HEIGHT };
 

@@ -11,6 +11,7 @@
 #include "collision.h"
 #include "ranking.h"
 #include "save.h"
+#include "pause_menu.h"
 
 int main(void)
 {
@@ -30,6 +31,7 @@ int main(void)
     Menu_options menu_option = NO_OPTION;
     bool active_game = has_active_game();
     menu_init(active_game);
+    pause_menu_init();
 
     Game_over_states game_over_state = GAME_OVER_SCREEN;
 
@@ -73,7 +75,7 @@ int main(void)
                 {
                     case MAIN_MENU:
                         active_game = has_active_game();
-                        menu_option = read_option(active_game);
+                        menu_option = update_menu(active_game);
                         game_state = menu(menu_option, &menu_state);
                     break;
                 
@@ -122,11 +124,20 @@ int main(void)
                 {
                     game_state = GAME_OVER;
                 }
+
+                if (is_pause_pressed()) 
+                {
+                    game_state = PAUSED;
+                }
                 // ------------------------------------
 
             break;
 
             case PAUSED:
+
+                Pause_options pause_option = read_pause_menu();
+                game_state = pause_to_game_state(pause_option);
+
             break;
 
             case GAME_OVER:
@@ -201,6 +212,13 @@ int main(void)
                 draw_points(&player);
 
             break;
+            
+            case PAUSED:
+
+                draw_menu_pause();
+
+            break;
+            
             case GAME_OVER:
                 
                 switch(game_over_state)

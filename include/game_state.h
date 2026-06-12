@@ -35,6 +35,7 @@ typedef struct Game_Save
 bool has_active_game();
 void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count);
 void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, bool keep_lives);
+bool is_pause_pressed();
 void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score);
 void draw_game_over();
 

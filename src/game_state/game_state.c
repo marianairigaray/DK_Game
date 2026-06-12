@@ -101,6 +101,13 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
     create_enemies(enemies, map, enemy_count);
 }
 
+bool is_pause_pressed() {
+    
+    if (IsKeyPressed(KEY_TAB)) return true;
+    
+    return false;
+} 
+
 void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score)
 {
     save_active_game(false);
