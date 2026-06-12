@@ -51,13 +51,13 @@ static void save_active_game(bool active_game) {
     fclose(file);
 }
 
-void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count)
+void reset_game(char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count)
 {
     // inicia novo save
     save_active_game(true);
 
     // reseta mapa
-    read_map(map, current_level);
+    read_map(map, 0);
 
     // reseta vidas do player
     save_game_lives(DEFAULT_LIVES);
@@ -108,7 +108,7 @@ bool is_pause_pressed() {
     return false;
 } 
 
-void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score)
+void end_game(End_game_states *end_game_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score)
 {
     save_active_game(false);
 
@@ -117,13 +117,19 @@ void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_EN
     {
         if (is_ranked(ranking, ranked_players, score))
         {
-            *game_over_state = INPUT_NAME;
+            *end_game_state = INPUT_NAME;
         }
         else
         {
-            *game_over_state = VIEW_RANKING;
+            *end_game_state = VIEW_RANKING;
         }
     } 
+}
+
+void draw_victory()
+{
+    DrawText("VICTORY", 10, 10, 40, BLACK);
+    DrawText("Press [SPACE] to continue", 10, 60, 15, BLACK);
 }
 
 void draw_game_over()

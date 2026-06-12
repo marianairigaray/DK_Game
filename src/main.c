@@ -13,6 +13,8 @@
 #include "save.h"
 #include "pause_menu.h"
 
+#define NUM_LEVELS 3
+
 int main(void)
 {
     // Initialization
@@ -36,7 +38,7 @@ int main(void)
     menu_init(active_game);
     pause_menu_init();
 
-    Game_over_states game_over_state = GAME_OVER_SCREEN;
+    End_game_states end_game_state = GAME_OVER_SCREEN;
 
     Ranking ranking[MAX_RANKING_ENTRIES] = {0};
     Ranking ranked_player = {0};
@@ -94,7 +96,7 @@ int main(void)
 
             case NEW_GAME:
 
-                reset_game(map, current_level, &player, enemies, &enemy_count);
+                reset_game(map, &player, enemies, &enemy_count);
 
                 game_state = PLAYING;
 
@@ -111,21 +113,25 @@ int main(void)
                 {
                     current_level++; // Avança o número do nível
                     
-                    
-                    if (current_level > 2) 
+                    if (current_level >= NUM_LEVELS) 
                     {
-                        current_level = 0; // Reinicia no mapa 0 (ou mude para game_state = MENU se preferir acabar o jogo)
+                        current_level = 0; // reseta para o primeiro level
+                        player.points += 1000; // Player ganha 1000 pontos por ter vencido o jogo
+                        end_game_state = VICTORY_SCREEN;
+                        game_state = END_GAME;
                     }
+                    else
+                    {
+                        // Carrega o novo mapa limpando o antigo e mantendo as vidas atuais (true)
+                        load_level(current_level, map, &player, enemies, &enemy_count, true);
                     
-                    // Carrega o novo mapa limpando o antigo e mantendo as vidas atuais (true)
-                    load_level(current_level, map, &player, enemies, &enemy_count, true);
-                    
-                    printf("Nivel %d carregado com sucesso!\n", current_level);
+                        printf("Nivel %d carregado com sucesso!\n", current_level);
+                    }
                 }
 
                 if (!player.is_active)
                 {
-                    game_state = GAME_OVER;
+                    game_state = END_GAME;
                 }
 
                 if (is_pause_pressed()) 
@@ -143,19 +149,20 @@ int main(void)
 
             break;
 
-            case GAME_OVER:
+            case END_GAME:
                 
-                switch(game_over_state)
+                switch(end_game_state)
                 {
+                    case VICTORY_SCREEN:
                     case GAME_OVER_SCREEN:
 
-                        game_over(&game_over_state, ranking, &ranked_players, player.points);
+                        end_game(&end_game_state, ranking, &ranked_players, player.points);
 
                     break;
 
                     case INPUT_NAME:
 
-                        if (update_ranking(ranking, &ranked_player, &ranked_players, player.points)) game_over_state = VIEW_RANKING;
+                        if (update_ranking(ranking, &ranked_player, &ranked_players, player.points)) end_game_state = VIEW_RANKING;
 
                     break;
 
@@ -163,7 +170,7 @@ int main(void)
 
                         if (is_return_main_menu())
                         {
-                            game_over_state = GAME_OVER_SCREEN;
+                            end_game_state = GAME_OVER_SCREEN;
                             game_state = MENU;
                             reset_button_selector();
                         }
@@ -225,10 +232,16 @@ int main(void)
 
             break;
             
-            case GAME_OVER:
+            case END_GAME:
                 
-                switch(game_over_state)
+                switch(end_game_state)
                 {
+                    case VICTORY_SCREEN:
+
+                        draw_victory();
+                    
+                    break;
+
                     case GAME_OVER_SCREEN:
 
                         draw_game_over();

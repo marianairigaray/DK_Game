@@ -13,16 +13,17 @@ typedef enum
     NEW_GAME,
     PLAYING,
     PAUSED,
-    GAME_OVER,
+    END_GAME,
     EXIT
 } Game_state;
 
-typedef enum Game_over_states
+typedef enum End_game_states
 {
+    VICTORY_SCREEN,
     GAME_OVER_SCREEN,
     INPUT_NAME,
     VIEW_RANKING
-} Game_over_states;
+} End_game_states;
 
 typedef struct Game_Save
 {
@@ -33,10 +34,11 @@ typedef struct Game_Save
 } Game_Save;
 
 bool has_active_game();
-void reset_game(char map[MAP_ROWS][MAP_COLS], int current_level, Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count);
+void reset_game(char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count);
 void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, bool keep_lives);
 bool is_pause_pressed();
-void game_over(Game_over_states *game_over_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score);
+void end_game(End_game_states *end_game_state, Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score);
+void draw_victory();
 void draw_game_over();
 
 #endif
