@@ -23,6 +23,9 @@ int main(void)
 
     // Initialize all required variables and load all required data
 
+    bool exit_game = false;
+    SetExitKey(KEY_NULL);
+
     // Inicializa a semente para geração de números aleatórios
     srand(time(NULL));
 
@@ -62,7 +65,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose())
+    while (!exit_game && !WindowShouldClose())
     {
         // Update
         //----------------------------------------------------------------------------------
@@ -171,6 +174,9 @@ int main(void)
             break;
 
             case EXIT:
+
+                exit_game = true;
+
             break;
         }
         //----------------------------------------------------------------------------------

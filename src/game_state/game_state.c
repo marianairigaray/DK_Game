@@ -103,7 +103,7 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
 
 bool is_pause_pressed() {
     
-    if (IsKeyPressed(KEY_TAB)) return true;
+    if (IsKeyPressed(KEY_TAB) || IsKeyPressed(KEY_ESCAPE)) return true;
     
     return false;
 } 
