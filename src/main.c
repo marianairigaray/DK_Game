@@ -162,7 +162,15 @@ int main(void)
 
                     case INPUT_NAME:
 
-                        if (update_ranking(ranking, &ranked_player, &ranked_players, player.points)) end_game_state = VIEW_RANKING;
+                        if (update_ranking(ranking, &ranked_player, &ranked_players, player.points)) 
+                        {
+                            for (int i = 0; i < ranked_player.name_len; i++)
+                                ranked_player.name[i] = '\0';
+
+                            ranked_player.name_len = 0;
+
+                            end_game_state = VIEW_RANKING;
+                        }
 
                     break;
 

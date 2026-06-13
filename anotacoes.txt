@@ -1,15 +1,7 @@
 
 BUGS:
 
-- jogo o jogo 1x -> vou pro ranking. Jogo o jogo de novo (sem fechar), vou pro ranking -> preciso apagar o ultimo nome que escrevi
-
-- se tu morrer e dar new game tu começa da fase em que tu morreu. (pontos e vidas resetam certo).
-
 - toda vez que tu fecha e abre o jogo os pontos (X) retornam no mapa
-
-- questão com o salvamento dos pontos do player (esqueci)
-
-- Fazer o player nao cair da escada quando ta caindo? nao sei se é bug ou não
 
 PRÓXIMOS PASSOS:
 - Salvar o nivel atual do jogador
