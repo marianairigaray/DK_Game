@@ -13,10 +13,11 @@ typedef struct Ranking
     int score;
 } Ranking;
 
+int load_ranking(Ranking ranking[MAX_RANKING_ENTRIES]);
 bool is_ranked(Ranking ranking[MAX_RANKING_ENTRIES], int *ranked_players, int score);
 bool update_ranking(Ranking ranking[MAX_RANKING_ENTRIES], Ranking *ranked_player, int *ranked_players, int score);
 bool is_return_main_menu();
 void draw_input_name_screen(Ranking ranked_player);
-void draw_ranking();
+void draw_ranking(const Ranking ranking[MAX_RANKING_ENTRIES], const int ranked_players);
 
 #endif

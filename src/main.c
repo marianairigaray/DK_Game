@@ -85,6 +85,9 @@ int main(void)
                     break;
                 
                     case RANKING:
+
+                        ranked_players = load_ranking(ranking);
+
                         if (is_return_main_menu())
                         {
                             menu_state = MAIN_MENU;
@@ -215,7 +218,7 @@ int main(void)
                 
                     case RANKING:
 
-                        draw_ranking();
+                        draw_ranking(ranking, ranked_players);
 
                     break;
                 }
@@ -229,6 +232,8 @@ int main(void)
                 draw_enemies(enemies, enemy_count);
 
                 DrawText(TextFormat("Lives: %d", player.lives), 10, 10, 20, BLACK);
+
+                DrawText(TextFormat("Level: %d", current_level), 210, 10, 20, BLACK);
 
                 draw_points(&player);
 
@@ -264,7 +269,7 @@ int main(void)
 
                     case VIEW_RANKING:
 
-                        draw_ranking();
+                        draw_ranking(ranking, ranked_players);
 
                     break;
                 }

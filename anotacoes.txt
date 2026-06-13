@@ -7,33 +7,7 @@ PRÓXIMOS PASSOS:
 - Salvar o nivel atual do jogador
 - Mostrar o Ranking
 
-RESOLVIDO:
-
-- Bug de as vezes o player não encostar nas paredes
-
-    como o player anda de 3 em 3 pixels, as vezes, se ele andar mais 3 pixels ele bateria em uma parede, entao o teste de colisão
-    nao deixa ele andar.
-    
-    Exemplo:
-    x + dx = 582.230.297
-    (x + dx) + TITLE_SIZE(20) - 1 = 601.230.297
-
-- as vezes o player pula no final da escada e cai da escada
-
-    ACHO que corrigi, se ver algo estranho no comportamento da escada avisar que arrumo
-
-- as vezes falta o player descer 1 pixel da escada, corrigi (qualquer coisa avisar q arrumo)
-
-- Bug do player ultrapassar a borda horizontal esquerda
-
-    trecho de código que causa o bug (linha 20): int col = (int)(x / TILE_SIZE);
-
-    float negativo apos dividir pelo TITLE_SIZE, se for um numero de -1 até -19, sera cortado para 0
-
-    (int)(-5 / 20)
-    = (int)(-0.15625)
-    = 0
-
-    Por causa disso ele passa no teste "col < 0" e consegue atravesar a tela
-
-    Ideia de solução: testar diretamente se "x < 0" (x sendo a posição horizontal em pixels)
+REQUISITOS:
+- o jogo possui constantes para velocidade do jogador, tamanho de tile, altura do pulo (se implementado), etc.
+- A, D, W, S tambem movem o personagem
+- Os inimigos devem se movimentar sobre as plataformas sem atravessar o bstáculos.

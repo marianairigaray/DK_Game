@@ -13,7 +13,7 @@ static Rectangle return_button = { 50, 500, BUTTON_WIDTH, BUTTON_HEIGHT };
 // Carrega o ranking e salva no array de structs Ranking
 // Essa função recebe um ranking zerado, caso o arquivo não exista, ela retorna o ranking zerado
 // caso o arquivo exista, ela retorna o ranking com as informações salvas do arquivo
-static int load_ranking(Ranking ranking[MAX_RANKING_ENTRIES])
+int load_ranking(Ranking ranking[MAX_RANKING_ENTRIES])
 {
     // Zera o ranking recebido
     for (int i = 0; i < MAX_RANKING_ENTRIES; i++)
@@ -158,11 +158,20 @@ bool is_return_main_menu()
     return false;
 }
 
-void draw_ranking() 
+void draw_ranking(const Ranking ranking[MAX_RANKING_ENTRIES], const int ranked_players) 
 {
     DrawText("RANKING", 10, 10, 40, BLACK);
     DrawRectangleRec(return_button, RED);
+
+    DrawText("DONKEY KONG", 10, 60, 40, BLACK);
+    DrawText("HIGH SCORES", 10, 120, 40, BLACK);
+
     DrawText("RETURN", 50, 500, 20, BLACK);
+  
+    for (int i = 0; i < ranked_players; i++)
+    {
+        DrawText(TextFormat("%d    %s    %d", i, ranking[i].name, ranking[i].score), 50, 200 + (30 * i), 20, BLACK);   
+    }
 }
 
 void draw_input_name_screen(Ranking ranked_player)
