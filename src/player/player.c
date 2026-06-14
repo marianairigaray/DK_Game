@@ -88,8 +88,8 @@ static void climb_ladder(Player *player, char map[MAP_ROWS][MAP_COLS], float dt)
 {
     float dy = 0;
     
-    if (IsKeyDown(KEY_DOWN)) dy += LADDER_SPEED * dt;
-    if (IsKeyDown(KEY_UP)) dy -= LADDER_SPEED * dt;
+    if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) dy -= LADDER_SPEED * dt;
+    if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) dy += LADDER_SPEED * dt;
     
     // Verifica se o player colidiu com uma plataforma (ou saiu da tela por consequencia)
     if (is_solid_tile(map, player->x, player->y + dy + TILE_SIZE -1))
@@ -126,8 +126,8 @@ static void climb_ladder(Player *player, char map[MAP_ROWS][MAP_COLS], float dt)
 static void move_player_x(Player *player, char map[MAP_ROWS][MAP_COLS], float dx, float dt)
 {
     // --- MOVIMENTO HORIZONTAL ---
-    if (IsKeyDown(KEY_RIGHT)) dx += player->speed * dt;
-    if (IsKeyDown(KEY_LEFT))  dx -= player->speed * dt;
+    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) dx += player->speed * dt;
+    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))  dx -= player->speed * dt;
 
     if (can_move_to(map, player->x + dx, player->y, player->width, player->height))
     {
@@ -215,14 +215,14 @@ void update_player(Player *player, char map[MAP_ROWS][MAP_COLS])
             // ESCADA
         
             // Subir escada
-            if (IsKeyDown(KEY_UP) && is_ladder_start(map, player->x, player->y)) 
+            if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && is_ladder_start(map, player->x, player->y)) 
             { 
                 align_player_ladder(player);
                 player->state = CLIMBING;
             }
 
             // Descer escada
-            if (IsKeyDown(KEY_DOWN) && is_ladder_down(map, player->x, player->y))
+            if ((IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && is_ladder_down(map, player->x, player->y))
             {
                 align_player_ladder(player);
                 player->state = CLIMBING;

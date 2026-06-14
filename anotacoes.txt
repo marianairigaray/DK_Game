@@ -1,12 +1,10 @@
 
 BUGS:
-
 - toda vez que tu fecha e abre o jogo os pontos (X) retornam no mapa
 
 PRÓXIMOS PASSOS:
-- Mostrar o Ranking
+- sprites
+- sons
 
 REQUISITOS:
-- o jogo possui constantes para velocidade do jogador, tamanho de tile, altura do pulo (se implementado), etc.
-- A, D, W, S tambem movem o personagem
-- Os inimigos devem se movimentar sobre as plataformas sem atravessar o bstáculos.
+- Os inimigos devem se movimentar sobre as plataformas sem atravessar obstáculos.

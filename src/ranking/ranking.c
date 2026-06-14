@@ -167,10 +167,12 @@ void draw_ranking(const Ranking ranking[MAX_RANKING_ENTRIES], const int ranked_p
     DrawText("HIGH SCORES", 10, 120, 40, BLACK);
 
     DrawText("RETURN", 50, 500, 20, BLACK);
-  
+
     for (int i = 0; i < ranked_players; i++)
     {
-        DrawText(TextFormat("%d    %s    %d", i, ranking[i].name, ranking[i].score), 50, 200 + (30 * i), 20, BLACK);   
+        DrawText(TextFormat("%d", i+1), 50, 180 + (30 * i), 20, BLACK);
+        DrawText(TextFormat("%s", ranking[i].name), 100, 180 + (30 * i), 20, BLACK);  
+        DrawText(TextFormat("%d", ranking[i].score), 350, 180 + (30 * i), 20, BLACK);     
     }
 }
 
