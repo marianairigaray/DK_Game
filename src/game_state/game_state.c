@@ -51,13 +51,17 @@ static void save_active_game(bool active_game) {
     fclose(file);
 }
 
-void reset_game(char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count)
+void reset_game(char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, int *current_level)
 {
     // inicia novo save
     save_active_game(true);
 
     // reseta mapa
     read_map(map, 0);
+
+    // reseta level
+    *current_level = 0;
+    save_current_level(0);
 
     // reseta vidas do player
     save_game_lives(DEFAULT_LIVES);
@@ -99,6 +103,49 @@ void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Ene
     // 6. Zera o contador de inimigos e cria os novos inimigos desta fase
     *enemy_count = 0;
     create_enemies(enemies, map, enemy_count);
+}
+
+int load_current_level()
+{
+
+    char file_name[] = "./data/level.bin";
+
+    // verificar se o arquivo existe
+    if (!FileExists(file_name))
+    {
+        // se não existir, o nível atual é o zero
+       return 0;
+    }
+
+    // se existir -> vai verificar se existe jogo salvo ou não
+    FILE *save = fopen(file_name, "rb");
+    if (save == NULL)
+    {
+        printf("Could not open %s to read.\n", file_name);
+        return false;
+    }
+
+    int current_level;
+
+    fread(&current_level, sizeof(int), 1, save);
+
+    fclose(save);
+
+    return current_level;
+}
+
+void save_current_level(const int current_level)
+{
+    FILE *file = fopen("./data/level.bin", "wb");
+    if (file == NULL)
+    {
+        printf("Could not open level.bin to write.\n");
+        return;
+    }
+
+    fwrite(&current_level, sizeof(int), 1, file);
+
+    fclose(file);
 }
 
 bool is_pause_pressed() {

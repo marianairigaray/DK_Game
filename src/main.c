@@ -44,7 +44,7 @@ int main(void)
     Ranking ranked_player = {0};
     int ranked_players = 0;
 
-    int current_level = 0; // Começa no nível 0 (map0.txt)
+    int current_level = load_current_level(); // Começa no nível 0 (map0.txt)
 
     char map[MAP_ROWS][MAP_COLS] = {0};
 
@@ -99,7 +99,7 @@ int main(void)
 
             case NEW_GAME:
 
-                reset_game(map, &player, enemies, &enemy_count);
+                reset_game(map, &player, enemies, &enemy_count, &current_level);
 
                 game_state = PLAYING;
 
@@ -130,6 +130,9 @@ int main(void)
                     
                         printf("Nivel %d carregado com sucesso!\n", current_level);
                     }
+
+                    // Salva o nível atual
+                    save_current_level(current_level);
                 }
 
                 if (!player.is_active)
