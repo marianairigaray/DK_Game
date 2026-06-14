@@ -4,7 +4,6 @@ BUGS:
 - toda vez que tu fecha e abre o jogo os pontos (X) retornam no mapa
 
 PRÓXIMOS PASSOS:
-- Salvar o nivel atual do jogador
 - Mostrar o Ranking
 
 REQUISITOS:
