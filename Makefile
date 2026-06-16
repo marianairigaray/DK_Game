@@ -18,13 +18,8 @@ SRC = \
 
 # Includes
 CFLAGS = \
-	-Ilibs/raylib/src \
-	-Iinclude \
-	-Isrc/map \
-	-Isrc/player \
-	-Isrc/enemy \
-	-Isrc/collision \
-	-Isrc/save
+    -Ilibs/raylib/src \
+    -Iinclude
 
 # OS-specific settings
 ifeq ($(OS),Windows_NT)

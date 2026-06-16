@@ -1,6 +1,6 @@
 # Donkey Kong Game
 
-## Configurando a raylib
+## Como baixar o repositório, compilar e rodar
 
 Após clonar o projeto, também é necessário compilar a raylib.
 
