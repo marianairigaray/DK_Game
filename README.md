@@ -17,3 +17,13 @@
     ```bash
     make run
     ```
+
+    3. Atualizar o README
+
+Quem clonar o projeto deverá usar:
+
+git clone --recursive <repo>
+
+ou, se já clonou:
+
+git submodule update --init --recursive
