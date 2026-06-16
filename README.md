@@ -1,29 +1,42 @@
 # Donkey Kong Game
 
-## 🚀 How to Build and Run
+## Configurando a raylib
 
-### Using VS Code
+Após clonar o projeto, também é necessário compilar a raylib.
 
-* **Compile and Run:** Press `Ctrl + F5`
-* **Debug:** Press `F5`
+### 1. Clonar o repositório com os submódulos
 
-### Using the Terminal
+```bash
+git clone --recursive https://github.com/marianairigaray/DK_Game.git
+```
 
-* **Compile only:**
-    ```bash
-    make
-    ```
-* **Run the executable:**
-    ```bash
-    make run
-    ```
+Se o projeto já foi clonado:
 
-    3. Atualizar o README
-
-Quem clonar o projeto deverá usar:
-
-git clone --recursive <repo>
-
-ou, se já clonou:
-
+```bash
 git submodule update --init --recursive
+```
+
+### 2. Compilar a raylib
+
+```bash
+cd libs/raylib/src
+make
+```
+
+### 3. Voltar para a pasta do projeto
+
+```bash
+cd ../../..
+```
+
+### 4. Compilar o jogo
+
+```bash
+make
+```
+
+### 5. Executar o jogo
+
+```bash
+make run
+```
