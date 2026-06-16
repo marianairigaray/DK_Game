@@ -8,3 +8,5 @@ PRÓXIMOS PASSOS:
 
 REQUISITOS:
 - Os inimigos devem se movimentar sobre as plataformas sem atravessar obstáculos.
+
+sprites e sons: https://www.spriters-resource.com/arcade/dk/
