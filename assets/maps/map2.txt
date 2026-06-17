@@ -2,11 +2,11 @@
                               
 X             F            D  
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZHZZ
-                           H  
+              X            H  
                            H  
  XE                        SD 
 ZZZZZZZZZZ          ZZZZZZZZHZ
-      X                     H 
+                            H 
                             H 
                             H 
                             H 
@@ -18,7 +18,7 @@ ZHZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
  H                            
 XSE            D             E
 ZZZZZZZ    ZZZZHZZZZ    ZZZZZZ
-               H          X   
+               H        X     
                H              
                H              
                H              
