@@ -25,14 +25,6 @@ typedef enum End_game_states
     VIEW_RANKING
 } End_game_states;
 
-typedef struct Game_Save
-{
-    int score;
-    int lives;
-    int current_level;
-    bool game_active;
-} Game_Save;
-
 bool has_active_game();
 void reset_game(char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, int *current_level);
 void load_level(int level_num, char map[MAP_ROWS][MAP_COLS], Player *player, Enemy enemies[MAX_ENEMIES], int *enemy_count, bool keep_lives);
