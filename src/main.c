@@ -10,7 +10,7 @@
 #include "points.h"
 #include "collision.h"
 #include "ranking.h"
-#include "save.h"
+#include "lives.h"
 #include "pause_menu.h"
 
 #define NUM_LEVELS 3

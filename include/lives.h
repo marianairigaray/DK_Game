@@ -1,5 +1,5 @@
-#ifndef SAVE_H
-#define SAVE_H
+#ifndef LIVES_H
+#define LIVES_H
 
 #define DEFAULT_LIVES 3
 

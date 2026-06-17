@@ -2,7 +2,7 @@
 #include "player.h"
 #include "map.h"
 #include "points.h"
-#include "save.h"
+#include "lives.h"
 
 #include <stdbool.h>
 #include <stdio.h>

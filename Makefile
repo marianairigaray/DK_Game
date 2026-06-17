@@ -8,7 +8,7 @@ SRC = \
 	src/player/player.c \
 	src/enemy/enemy.c \
 	src/collision/collision.c \
-	src/save/save.c \
+	src/lives/lives.c \
 	src/game_state/game_state.c \
 	src/menu/menu.c \
 	src/points/points.c \

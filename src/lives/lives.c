@@ -1,4 +1,4 @@
-#include "save.h"
+#include "lives.h"
 #include <stdio.h>
 
 //salva a quantidade de vidas atual no arquivo save.txt

@@ -3,7 +3,7 @@
 #include "map.h"
 #include "player.h"
 #include "points.h"
-#include "save.h"
+#include "lives.h"
 #include "enemy.h"
 #include "ranking.h"
 #include <stdio.h>
