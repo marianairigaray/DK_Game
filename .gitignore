@@ -7,7 +7,7 @@ main
 .vscode/
 
 # Arquivos de save locais do jogo
-save.txt
-score.bin
-save.bin
 level.bin
+lives.txt
+save.bin
+score.bin

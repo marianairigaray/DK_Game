@@ -172,7 +172,7 @@ void draw_ranking(const Ranking ranking[MAX_RANKING_ENTRIES], const int ranked_p
     {
         DrawText(TextFormat("%d", i+1), 50, 180 + (30 * i), 20, BLACK);
         DrawText(TextFormat("%s", ranking[i].name), 100, 180 + (30 * i), 20, BLACK);  
-        DrawText(TextFormat("%d", ranking[i].score), 350, 180 + (30 * i), 20, BLACK);     
+        DrawText(TextFormat("%d", ranking[i].score), 400, 180 + (30 * i), 20, BLACK);     
     }
 }
 
